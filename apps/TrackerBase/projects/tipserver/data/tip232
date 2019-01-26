@@ -1,0 +1,15 @@
+You can configure bash keybindings to suit your needs by creating an .inputrc file in your home directory. Mine looks like this:
+<PRE>
+set convert-meta Off
+set output-meta On
+Control-f: kill-word
+DEL: delete-char
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
+</PRE>
+This lets bash accept eight-bit characters, use ^F to erase word forward, the DEL-key to erase the character to the right of the cursor and HOME and END to jump to the beginning and the end of line respectively.
+<P>
+For a more thorough explanation of what configurations are possible 
+than described in the bash manpage, you can look at the documentation for
+readline. (Sadly, the manpage for readline is not included with BeOS.)
+

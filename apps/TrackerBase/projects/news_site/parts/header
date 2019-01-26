@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+	<title>Be Fleeting Urge</title>
+	<!-- Many thanks to Maarten Hekkelman for the base code of this sample page, from which I basically helped myself. -->
+</head>
+
+<body bgcolor="#ffffff" background="./graphics/background.gif">
+
+	<table width=610 border=0 cellspacing=0 cellpadding=0>
+	<tr>
+		<td rowspan=2 valign=top width=130 height=2 align=bottom>
+		</td>
+		<td width=480 valign=top>
+
+		</td>
+	</tr>
+	<tr>
+		<td colspan=3 valign=top>
+			<br clear=all>
+			<center>
+			<H1><font color="#626B89">Be Fleeting Urge</font></H1>
+			<H4><font color="#626B89">BeOS news from the ledge...</font></H4>			
+			</center>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		</td>
+		<td colspan=3>
+		
+<!-- CONTENT STARTS HERE -->
+
+<P>

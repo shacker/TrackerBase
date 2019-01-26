@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>TrackerBase Readme</title>
+</head>
+<body  style="background-image:url(gfx/blue_bak.jpg); background-repeat: repeat-y;" TEXT="#000000" LINK="#711E08" VLINK="#D098A5">
+
+
+
+	<TABLE WIDTH=100% border=0 CELLPADDING=10>
+		<TR>
+			<TD WIDTH=130 valign=top>
+
+<img src="./gfx/blank1.gif" width=130 height=5 alt="blank1">
+<b>
+
+<FONT SIZE=+2 COLOR="#FFFFFF"><i>General</i></FONT>
+<FONT SIZE=+1 COLOR="#FFFFB3">
+<P><a href="about.html">About</a>
+<P><a href="how.html">How it works</a>
+<P><a href="usage.html">Usage</a>
+<P><a href="attributes.html">Attributes</a>
+<P><a href="queries.html">Queries</a>
+<P><a href="caveats.html">Caveats</a>
+<P><a href="tbase2.html">TBase II</a>
+</FONT>
+
+<FONT SIZE=+1 COLOR="#FFFFB3">
+<P><FONT SIZE=+2 COLOR="#FFFFFF"><i>Sample Code</i></FONT>
+<P><a href="simple.html">Simpletest</a>
+<P><a href="bepeople.html">BePeople</a>
+<P><a href="news.html">News site</a>
+<P><a href="tips.html">Tip server</a>
+<P><a href="snippets.html">Snippets</a>
+</FONT>
+
+</b>
+
+			</TD>
+
+			<TD VALIGN=TOP>
+<IMG SRC="gfx/tbase.icon.jpg" ALIGN="RIGHT">
+
+<FONT SIZE=+2 COLOR="#5E6EA5">TrackerBase Queries</FONT>
+<p>
+
+While several of these sample scripts simply loop through a directory and act on every file, the real power of a database emerges when using more specialized criteria. For example, if you use the Category attribute to divide up your databased files, you may want to process just one category at a time. Since you're doing all of this from within shell scripts, you need to know how to run BeOS queries from the command line.
+<P>
+Command-line queries use the Find by Formula syntax you've seen in the query application. The easiest way to construct queries for your scripts is to build them as Attribute queries in the GUI, then switch to Formula mode, copy the formula to the clipboard, and paste it into your script.
+<P>
+<b>Note:</b>  If TrackerBase files don't show up as an option in the GUI query tool's filetypes dropdown, you may have to reboot your machine first.
+<P>
+<img src="./gfx/query.gif" width=460 height=218 alt="query"><BR>
+<blockquote>
+Begin by constructing your query in Attribute mode. Be sure to include the Project attribute to avoid getting results from other TrackerBase projects.
+</blockquote>
+
+<P>
+<img src="./gfx/formula.gif" width=458 height=157 alt="formula"><BR>
+<blockquote>
+When satisfied with your query, toggle to Formula mode, select the formula, and copy it to the clipboard.
+</blockquote>
+
+<P>
+The command-line query syntax is:
+<pre>
+query "&lt;your query here&gt;"
+</pre>
+For example, this query will find all of the TrackerBase files that belong to a project called "news" :
+<pre>
+query "((TBASE:project=="*[nN][eE][wW][sS]*")&&(BEOS:TYPE=="text/trackerbase"))"
+</pre>
+
+The quotes are important. Always remember to include a value for the Project attribute so the query only returns results specific to your project -- you don't want your script acting on files from these sample projects, for instance.
+<P>
+There are a few interesting things you can do with Formula queries that you can't do with GUI queries. For example, you can search for two or more filetypes at once by adding a second type and separate them with double pipes (||) instead of double ampersands (&&). || means "or" instead of "and."
+<pre>
+((BEOS:TYPE=="text/trackerbase") || (BEOS:TYPE=="text/plain"))
+</pre>
+When editing query formulas, take care to nest your conditions in parentheses properly. If you speak regular expressions, you can insert them between any two " "s for far greater control.
+<P>
+Remember that all queries must include at least one indexed attribute. See the <a href="attributes.html">Attributes</a> page for more on that.
+
+<P ALIGN=RIGHT>
+Next: <a href="caveats.html">Caveats</a>
+<P>
+<IMG SRC="gfx/tbase.icon.jpg" ALIGN="LEFT">
+<P>
+
+			</TD>
+		</TR>
+	</TABLE>
+
+
+
+
+</body>
+</html>

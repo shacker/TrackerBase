@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>TrackerBase : Tip Server</title>
+</head>
+<body  style="background-image:url(gfx/blue_bak.jpg); background-repeat: repeat-y;" TEXT="#000000" LINK="#711E08" VLINK="#D098A5">
+
+
+
+	<TABLE WIDTH=100% border=0 CELLPADDING=10>
+		<TR>
+			<TD WIDTH=130 valign=top>
+
+<img src="./gfx/blank1.gif" width=130 height=5 alt="blank1">
+<b>
+
+<FONT SIZE=+2 COLOR="#FFFFFF"><i>General</i></FONT>
+<FONT SIZE=+1 COLOR="#FFFFB3">
+<P><a href="about.html">About</a>
+<P><a href="how.html">How it works</a>
+<P><a href="usage.html">Usage</a>
+<P><a href="attributes.html">Attributes</a>
+<P><a href="queries.html">Queries</a>
+<P><a href="caveats.html">Caveats</a>
+<P><a href="tbase2.html">TBase II</a>
+</FONT>
+
+<FONT SIZE=+1 COLOR="#FFFFB3">
+<P><FONT SIZE=+2 COLOR="#FFFFFF"><i>Sample Code</i></FONT>
+<P><a href="simple.html">Simpletest</a>
+<P><a href="bepeople.html">BePeople</a>
+<P><a href="news.html">News site</a>
+<P><a href="tips.html">Tip server</a>
+<P><a href="snippets.html">Snippets</a>
+</FONT>
+
+</b>
+
+			</TD>
+
+			<TD VALIGN=TOP>
+
+<IMG SRC="gfx/tbase.icon.jpg" ALIGN="RIGHT">
+
+<FONT SIZE=+2 COLOR="#5E6EA5">Tip Server</FONT>
+<p>
+
+This is the script that is currently driving <a href="http://www.birdhouse.org/beos/tips">The BeOS Tip Server</a>. Also included are 40 random tip files in the data folder so you can generate a mini-version of the site. Structurally, it isn't much different from the other scripts -- an index page with sub-pages. However, this index page groups links by category, rather than just running them down. It also creates a "special" group of links at the top of the page for recent entries -- these are flagged by a "New" attribute that carries a yes or no value. Toggle that attribute to "n" from Tracker, and it won't show up in the recent list next time the site is generated.
+<P>
+This is also the only script that uses queries to gather data, rather than straight directory crawls. Queries allow for much more interesting results, but have some gotchas. You must, for instance, take care to filter out any TrackerBase files that are in the Trash. You also have to make sure to specify the project name in the "project" attribute so your queries don't accidentally turn up TrackerBase files from other projects.
+<P>
+You'll notice that the top of the script has a long list of if/then statements relating to banner ads. If the AdKey attribute equals X, then the associated graphic and URL are... . AdGraphic and AdURL were initially attributes of their own, but Tracker has no mechanism for linking one attribute to another, as you might do in a commercial database. Linking them this way simplifies administration and prevents foul-ups.
+<P>
+As with the news site, URLs and e-mail addresses are only created on tip pages when those attributes are not blank.
+
+<P>
+<IMG SRC="gfx/tbase.icon.jpg" ALIGN="LEFT">
+<P>
+
+			</TD>
+		</TR>
+	</TABLE>
+
+
+
+
+</body>
+</html>

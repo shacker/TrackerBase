@@ -1,0 +1,11 @@
+<A HREF="http://www.be.com/beware/highlights/pe.html">Pe</A> has the most excellent ability to import other files as "includes." This functions similar to a server-side include (SSI), but works within the editor itself.  Insert code like this in your HTML document:
+
+<PRE>
+&lt;!-- #include "./anotherfilename.html" --&gt;
+        bla bla 
+&lt;!-- end include--&gt;
+</PRE>
+
+anotherfilename.html can be any block of HTML -- a page header or footer, or your left-hand navigation, for example. When you're ready to hoover the include into your document, click the Update button on the HTML tool palette. This lets you manage a page "object" as a single file, so you can update lots of files without having to paste the same object into each one.
+<P>
+Pe includes also accept static variables such as: $date$, $time$, $name$ and $file$.

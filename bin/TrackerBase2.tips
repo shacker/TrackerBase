@@ -1,0 +1,372 @@
+#! /bin/sh
+ 
+### TrackerBase.tips -- This is the same script that currently
+### generates The BeOS Tip Server at http://www.birdhouse.org/beos/tips.
+### Only a portion of the data files are included in this distribution.
+
+# Scot Hacker, 8/98. Updates at http://www.birdhouse.org/beos/software
+# Comments to beos@birdhouse.org. See readme.html for info.
+
+
+#### User variables. Adjust or keep each of the following ####
+### Pay special attention to the DataPath variable (sorry about that).
+
+Base=/boot/apps/TrackerBase/projects/tipserver
+InputPath=$Base/data
+DataPath=\\/boot\\/apps\\/TrackerBase\\/projects\\/tipserver\\/data\\/
+ExportPath=/boot/home/betips
+PartPath=$Base/parts
+Bin=archive
+Extension=.html
+MimeType=text/html
+Index=index.html
+LinkingAttribute=category
+
+#### End user variables ####
+
+### Determine whether we're running all of the tips, or just new ones.
+### If RunType = "-new" then we'll just create new files for those with "y" flag.
+RunType="$1"
+
+
+### Count the number of files in the database.
+dircount=`ls -l $InputPath| wc -l`
+dircount=`expr $dircount - 1`
+
+### Get the current date
+update=`date +%D`
+
+
+### This function is invoked later to determine which ad goes on each page
+GetAdInfo() {
+
+
+	if [ "$AdKey" = "e-picture1" ]; then
+		AdGraphic=e-picture1.gif
+		AdURL=http://www.beatware.com/products/epicture/
+		AdAlt="e-Picture"
+	fi
+	
+
+	if [ "$AdKey" = "LeBuzz" ]; then
+		AdGraphic=buzzbanner.gif
+		AdURL=http://www.lebuzz.com/
+		AdAlt="LeBuzz"
+	fi
+	
+	
+	if [ "$AdKey" = "BeNews2" ]; then
+		AdGraphic=benews.banner2.gif
+		AdURL=http://www.benews.com/
+		AdAlt="BeNews"
+	fi
+
+	if [ "$AdKey" = "BeDC" ]; then
+		AdGraphic=bedc.gif
+		AdURL=http://www.be.com/developers/developer_conference/BeDC_info.html
+		AdAlt="BeDC"
+	fi
+
+	if [ "$AdKey" = "NetPenguin" ]; then
+		AdGraphic=netpenguin.gif
+		AdURL=http://www.desertnights.com/netpenguin.html
+		AdAlt="NetPenguin"
+	fi
+	
+	
+	if [ "$AdKey" = "Resistance" ]; then
+		AdGraphic=resistance.gif
+		AdURL=http://www.be.com/
+		AdAlt="Resistance is not futile"
+	fi
+
+	if [ "$AdKey" = "Bible1" ]; then
+		AdGraphic=bible.banner.gif
+		AdURL=/beos/bible/
+		AdAlt="The BeOS Bible"
+	fi
+
+	if [ "$AdKey" = "R4" ]; then
+		AdGraphic=R4.gif
+		AdURL=http://www.be.com/
+		AdAlt="R4 Now!"
+	fi
+
+	if [ "$AdKey" = "Gobe1" ]; then
+		AdGraphic=gobeproductive1.gif
+		AdURL=http://www.gobe.com/
+		AdAlt="Gobe Productive 1"
+	fi
+
+	if [ "$AdKey" = "Gobe2" ]; then
+		AdGraphic=gobeproductive2.gif
+		AdURL=http://www.gobe.com/
+		AdAlt="Gobe Productive 2"
+	fi
+
+
+	if [ "$AdKey" = "GoingWare" ]; then
+		AdGraphic=goingware2.gif
+		AdURL=http://www.goingware.com/
+		AdAlt="GoingWare"
+	fi
+
+	if [ "$AdKey" = "BeLine" ]; then
+		AdGraphic=beline1.gif
+		AdURL="http://www.be.com/cgi-bin/handler.pl?r=tipserver&c=ad&g=banner1&g=http://www.thebeline.com/"
+		AdAlt="The Be Line"
+	fi	
+
+
+	if [ "$AdKey" = "BeDemoCD" ]; then
+		AdGraphic=bedemocd1.gif
+		AdURL="http://www.be.com/cgi-bin/handler.pl?r=tipserver&c=ad&g=banner1&d=http://www.be.com/demoCD/"
+		AdAlt="Be Demo CD"
+	fi	
+	
+	
+	if [ "$AdKey" = "Mail-It1" ]; then
+		AdGraphic=mail-it1.gif
+		AdURL=http://www.beatware.com/products/mailit/
+		AdAlt="BeatWare Mail-It"
+	fi
+	
+	if [ "$AdKey" = "Mail-It2" ]; then
+		AdGraphic=mail-it2.gif
+		AdURL=http://www.beatware.com/products/mailit/
+		AdAlt="BeatWare Mail-It"
+	fi
+
+	if [ "$AdKey" = "Mail-It3" ]; then
+		AdGraphic=mailit.control.gif
+		AdURL=http://www.beatware.com/products/mailit/
+		AdAlt="BeatWare Mail-It"
+	fi
+
+
+	if [ "$AdKey" = "Mail-It4" ]; then
+		AdGraphic=mailit.nostamp.gif
+		AdURL=http://www.beatware.com/products/mailit/
+		AdAlt="BeatWare Mail-It"
+	fi
+
+	
+	if [ "$AdKey" = "Get-It1" ]; then
+		AdGraphic=get-it1.gif
+		AdURL=http://www.beatware.com/products/getit/
+		AdAlt="BeatWare Get-It"
+	fi
+	
+	if [ "$AdKey" = "Get-It2" ]; then
+		AdGraphic=get-it2.gif
+		AdURL=http://www.beatware.com/products/getit/
+		AdAlt="BeatWare Get-It"
+	fi
+	
+	if [ "$AdKey" = "BeDope1" ]; then
+		AdGraphic=bedope1.gif
+		AdURL=http://www.bedope.com/
+		AdAlt="BeDope"
+	fi
+	
+	
+
+		
+}
+
+
+
+### Now we can actually start doin' stuff
+
+echo Examining your database ...
+
+### Build an index (linking) page first.
+### Get a list of unique categories.
+{
+	for i in $InputPath/*; do
+		catattr TBASE:"$LinkingAttribute" $i | sed s/\ \:\ /%/g | cut -f3 -d\%
+	done
+} > /var/tmp/cattemp
+
+cat /var/tmp/cattemp | sort | uniq > /var/tmp/catlist
+
+
+
+### Write the index page by concatenating pre-formed parts
+### with query results. The full index page is generated
+### whether we're generating all tips or just new ones.
+echo
+echo Building index page ... this may take a minute ...
+echo
+{
+	# HTML up to beginning of list
+	cat $PartPath/indexhead2
+	echo Last updated: \<B\>`date +%D`\</B\> Current tip count: \<B\>$dircount\</B\>
+	cat $PartPath/indexpost
+	echo \<blockquote\>
+	
+	# Table for recent tips only
+		
+		query "((TBASE:new!="n")&&(TBASE:project=="tipserver")&&(BEOS:TYPE=="text/x-trackerbase"))" | sed /Trash/d | sed s/$DataPath// | sort -r > /var/tmp/tiplist	
+			# Create a tabled list of all new tips
+				{
+				while read ThisTip; do
+					Title=`catattr "TBASE:title" $InputPath/$ThisTip | sed s/\ \:\ /%/g | cut -f3 -d\%`
+					echo \<A HREF=\"/cgi-bin/chunga.pl?ID=$ThisTip\"\>$Title\<\/A\>
+					echo \<BR\>					
+				done	
+				} < /var/tmp/tiplist
+		
+	cat $PartPath/indexfoot1a
+	cat $PartPath/navmap2
+	echo \</blockquote\>		
+	cat $PartPath/indexfoot2
+}> $ExportPath/$Index
+
+addattr BEOS:TYPE $MimeType $ExportPath/$Index
+
+echo Created index file at: $ExportPath/$Index
+
+
+
+### Make the category pages
+
+{
+while read ThisCat; do
+	echo Creating menu page for $ThisCat
+		### Some category names have spaces and mixed cases, so create HTML output names
+		
+		if [ "$ThisCat" = "Applications" ]; then
+			menu=applications
+			AdKey=e-picture1
+		fi
+
+		if [ "$ThisCat" = "Audio" ]; then
+			menu=audio
+			AdKey=LeBuzz
+		fi
+		
+		if [ "$ThisCat" = "Hardware" ]; then
+			menu=hardware
+			AdKey=R4
+		fi
+
+		if [ "$ThisCat" = "Interface" ]; then
+			menu=interface
+			AdKey=BeDemoCD
+		fi
+
+		if [ "$ThisCat" = "Miscellaneous" ]; then
+			menu=misc
+			AdKey=Resistance			
+		fi
+
+		if [ "$ThisCat" = "Networking" ]; then
+			menu=networking
+			AdKey=NetPenguin			
+		fi
+
+		if [ "$ThisCat" = "PPP" ]; then
+			menu=ppp
+			AdKey=Mail-It4
+		fi
+
+		if [ "$ThisCat" = "Terminal" ]; then
+			menu=terminal
+			AdKey=Gobe1
+		fi
+
+		if [ "$ThisCat" = "Tracker and Deskbar" ]; then
+			menu=tracker
+			AdKey=Gobe2			
+		fi
+
+		if [ "$ThisCat" = "Warnings" ]; then
+			menu=warnings
+			AdKey=Get-It1
+		fi
+
+		if [ "$ThisCat" = "Workspaces" ]; then
+			menu=workspaces
+			AdKey=GoingWare
+		fi
+		
+		### Create the menu files themselves
+		{
+			cat $PartPath/tip_head
+			echo 		\<title\>The BeOS Tip Server: $ThisCat\</title\>
+			cat $PartPath/category_post_title2
+			GetAdInfo
+			echo \<a href=\"$AdURL\"\>\<img src=\"../ads/$AdGraphic\" width=468 height=60 border=0 alt=\"$AdAlt\"\>\</a\>\<BR\>
+			cat $PartPath/category_pre_category
+			echo Category: \<FONT COLOR=\"#FFFACD\"\>$ThisCat\</FONT\>
+			cat $PartPath/category_post_category
+			echo \<blockquote\>
+
+				# Begin subroutine to list tips for this category
+				# Run a query for all tips in this category
+				query "((TBASE:category=='$ThisCat')&&(TBASE:project=="tipserver")&&(BEOS:TYPE=="text/x-trackerbase"))" | sed /Trash/d | sed s/$DataPath// > /var/tmp/tiplist
+				
+				# Now you've got a numbered list of all tips in this category (tiplist).
+				# But you need tip titles as well so you can sort them alphabetically.
+				# This routine makes a temp file containing both tip titles and tip numbers,
+				# then sorts that alphabetically and removes the titles.
+					{
+						while read ThisTip; do
+							Title=`catattr "TBASE:title" $InputPath/$ThisTip | sed s/\ \:\ /%/g | cut -f3 -d\%`
+							echo $Title#$ThisTip
+						done | sort | cut -f2 -d\#
+					} < /var/tmp/tiplist > /var/tmp/tiplistalpha
+					
+					
+				# Now we can create the sections of the index page based on this alphabetical list
+					{
+					while read ThisTip; do
+						Title=`catattr "TBASE:title" $InputPath/$ThisTip | sed s/\ \:\ /%/g | cut -f3 -d\%`
+						New=`catattr TBASE:new $InputPath/$ThisTip | sed s/\ \:\ /%/g | cut -f3 -d\%`				
+						echo \<A HREF=\"/cgi-bin/chunga.pl?ID=$ThisTip\"\>$Title\<\/A\>
+							if [ "$New" = "y" ]; then
+								echo \<B\>New\<\/B\>
+							fi
+							
+							if [ "$New" = "u" ]; then
+								echo \<B\>Updated\<\/B\>
+							fi
+													
+						echo \<BR\>					
+					done	
+					} < /var/tmp/tiplistalpha
+											
+			
+			cat $PartPath/category_post_list
+			cat $PartPath/navmap2
+			cat $PartPath/indexfoot2	
+		} > $ExportPath/$menu.html
+		addattr BEOS:TYPE $MimeType $ExportPath/$menu.html
+			
+done	
+} < /var/tmp/catlist 
+
+
+
+
+
+
+
+
+
+echo
+echo Done. Your database export is at $ExportPath
+echo
+
+
+
+## Clean up
+
+rm /var/tmp/*
+
+# Old: launches new site in browser
+#NetPositive $ExportPath/$Index &
+
+alert "Tip Server menu pages have been updated"
+

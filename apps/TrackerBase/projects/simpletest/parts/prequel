@@ -1,0 +1,9 @@
+	<h2>TrackerBase SimpleTest</h2>
+Six files in your database, six parts to this story. Each part's headline links to a separate page, and each page is derived from one file in your database.
+<P>
+Look in your parts subdirectory to see how the HTML components are broken up. The script itself is heavily commented -- you should be able to figure what's going on even if you're not a native bash speaker.
+<P>
+<HR>
+<P>
+<h2>The Myth of the Titanic</h2>
+<i>By Eric D. Snider</i>

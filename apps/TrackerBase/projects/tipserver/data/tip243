@@ -1,0 +1,2 @@
+The new Sounds preferences panel lets you associate .wav, .aiff, or .raw sound files with certain system events. While you can easily choose sound files by selecting Other... from the bottom of the picklist in this panel, you can easily organize your system sounds by dragging them to 
+<TT>/boot/home/config/sounds</TT>. Any files living in this directory will appear automatically on the picklist in the Sounds prefs panel. 

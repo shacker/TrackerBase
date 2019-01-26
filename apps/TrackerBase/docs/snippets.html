@@ -1,0 +1,473 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>TrackerBase : Code Snippets</title>
+</head>
+<body  style="background-image:url(gfx/blue_bak.jpg); background-repeat: repeat-y;" TEXT="#000000" LINK="#711E08" VLINK="#D098A5">
+
+<A NAME="top">
+
+
+	<TABLE WIDTH=100% border=0 CELLPADDING=10>
+		<TR>
+			<TD WIDTH=130 valign=top>
+
+<img src="./gfx/blank1.gif" width=130 height=5 alt="blank1">
+<b>
+
+<FONT SIZE=+2 COLOR="#FFFFFF"><i>General</i></FONT>
+<FONT SIZE=+1 COLOR="#FFFFB3">
+<P><a href="about.html">About</a>
+<P><a href="how.html">How it works</a>
+<P><a href="usage.html">Usage</a>
+<P><a href="attributes.html">Attributes</a>
+<P><a href="queries.html">Queries</a>
+<P><a href="caveats.html">Caveats</a>
+<P><a href="tbase2.html">TBase II</a>
+</FONT>
+
+<FONT SIZE=+1 COLOR="#FFFFB3">
+<P><FONT SIZE=+2 COLOR="#FFFFFF"><i>Sample Code</i></FONT>
+<P><a href="simple.html">Simpletest</a>
+<P><a href="bepeople.html">BePeople</a>
+<P><a href="news.html">News site</a>
+<P><a href="tips.html">Tip server</a>
+<P><a href="snippets.html">Snippets</a>
+</FONT>
+
+</b>
+			</TD>
+
+			<TD VALIGN=TOP>
+<FONT SIZE=+2 COLOR="#5E6EA5">TrackerBase Code Snippets</FONT>
+<p>
+Here are generic examples of the most common bash commands and structures used in these scripts. This page may also be useful as a general introduction to common bash constructs, though it's pretty sparse. Use these snippets as starter code for your own TrackerBase projects.
+
+<p>
+
+<A HREF="#First Line">First Line</A><BR>
+<A HREF="#Using paths in variables">Using paths in variables</A><BR>
+<A HREF="#Assign the results of a command to a variable">Assign the results of a command to a variable</A><BR>
+<A HREF="#Get user input as a variable">Get user input as a variable</A><BR>
+<A HREF="#Extract an attribute's value from a file">Extract an attribute's value from a file</A><BR>
+<A HREF="#Assign an attribute's value to a variable">Assign an attribute's value to a variable</A><BR>
+<A HREF="#Assign a MIME type to a file">Assign a MIME type to a file</A><BR>
+<A HREF="#Count the number of records in your database">Count the number of records in your database</A><BR>
+<A HREF="#Run the results of one command through another one">Run the results of one command through another one</A><BR>
+<A HREF="#Cut a string down to size">Cut a string down to size</A><BR>
+<A HREF="#Search and replace text in a string">Search and replace text in a string</A><BR>
+<A HREF="#Delete lines from output">Delete lines from output</A><BR>
+<A HREF="#Terminal queries">Terminal queries</A><BR>
+<A HREF="#Use if/then statements">Use if/then statements</A><BR>
+<A HREF="#Act on every file in a directory">Act on every file in a directory</A><BR>
+<A HREF="#Write the results of a command block to a file">Write the results of a command block to a file</A><BR>
+<A HREF="#Read in lines from a text file">Read in lines from a text file</A><BR>
+<A HREF="#Define and invoke functions">Define and invoke functions</A><BR>
+
+
+
+
+
+
+
+
+
+<A NAME="First Line">
+<h3>First Line</h3>
+<P>
+Every shell script must have:
+<P>
+<tt>#! /bin/sh</tt>
+<P>
+<P>as its first line. If you want to be able to run it from any Terminal prompt, the script must live in /boot/home/config/bin. If you want to keep the script in a different directory, that directory must either be in your system path, or you must set the file's permissions to executable:
+<P>
+<tt>chmod 755 filename</tt>
+<p>
+<a href="#top">top</a>
+
+
+
+<A NAME="Using paths in variables">
+<h3>Using paths in variables</h3>
+Don't hard-code paths into your scripts. Instead, establish them as variables at the beginning of the script. This way you can move your project directories around and keep your scripts running by changing a single variable. In other words, start with a variable like:
+<P>
+<tt>Base=/boot/apps/TrackerBase/projects/bepeople</tt>
+<P>
+and thereafter you'll be able to use $Base as a standin for that path. You can also assemble paths by gluing variables together. For example, if you set another variable such as:
+<P>
+<tt>OutputPath=$Base/output</tt>
+<P>
+then a reference to $OutputPath will always stand in for /boot/apps/TrackerBase/projects/bepeople/output.
+<p>
+<a href="#top">top</a>
+
+
+
+<A NAME="Assign the results of a command to a variable">
+<h3>Assign the results of a command to a variable</h3>
+
+Often you need to work with variables that represent the outcome of a command. For example, you might want to create a variable called Dir that equals whatever the current working directory is. Since the command <tt>pwd</tt> prints the working directory, you could use:
+<P>
+Dir=`pwd`
+<P>From then on, $Dir would stand in for a text string reflecting the current working directory. It's important to use backticks rather than apostrophes. On most keyboards, the backtick shares the tilde key, next to the 1 key.
+<p>
+<a href="#top">top</a>
+
+
+
+
+
+
+
+
+<A NAME="Get user input as a variable">
+<h3>Get user input as a variable</h3>
+
+Sometimes it's useful to get the contents of a variable from the user. The BePeople script, for example, creates page titles based on the user's name. Use the <tt>read</tt> command for this:
+<P>
+<tt>read UserName</tt>
+<P>
+When the script hits this line, it will pause until the user types something. Whatever they type will become the value of $UserName.
+<p>
+<a href="#top">top</a>
+
+
+
+
+
+
+
+<A NAME="Extract an attribute's value from a file">
+<h3>Extract an attribute's value from a file</h3>
+
+You first have to know the name of the attribute you want to extract (see the <a href="attributes.html">Attributes</a> page for more). Once you know that, you can use:
+<P>
+<tt>catattr attributename filename</tt>
+<P>
+In most cases, the filename will be a variable because you'll want to do this for every file in a directory, or every file in a list, or every file that matches some criteria. For example, if you wanted the MIME types for all the files in a directory and you were inside of a loop that was assigning the variable $FileName to each file, you would use:
+<P>
+<tt>catattr BEOS:TYPE $FileName</tt>
+<p>
+<a href="#top">top</a>
+
+
+
+
+
+<A NAME="Assign an attribute's value to a variable">
+<h3>Assign an attribute's value to a variable</h3>
+
+Combining two of the techniques above, you make a variable's value equal to the value of an attribute extracted from the current file:
+<pre>
+ThisAttrib=`catattr attributename filename`
+</pre>
+You will probably then need to trim the value down to size with the <A HREF="#Cut a string down to size">cut</A> command.
+<p>
+<a href="#top">top</a>
+
+
+
+
+
+<A NAME="Assign a MIME type to a file">
+<h3>Assign a MIME type to a file</h3>
+
+As you're generating new files, they'll appear in Tracker without a filetype, and thus have plain blue square icons. While they'll be identified correctly by double-clicking, it's more suave to set the types in your script. If you're in a loop that's creating files named after the current value of $FileName, you would establish them as HTML docs with:
+<P>
+addattr BEOS:TYPE text/html $FileName
+
+<p>
+<a href="#top">top</a>
+
+
+
+
+
+
+
+
+
+
+<A NAME="Run the results of one command through another one">
+<h3>Run the results of one command through another one</h3>
+
+The "|" (pipe) redirector is used to take the output (known as stdout) from one command and send it to the input (known as stdin) of another, and can be used to build custom tools by stringing commands together. Very powerful. For example, you could sort the contents of a file by printing it to the shell with the cat command, then running that through the sort command:
+<P>
+<tt>cat phonelist | sort</tt>
+<P>
+We'll come back to this in a minute.
+<p>
+<a href="#top">top</a>
+
+
+
+
+
+
+<A NAME="Count the number of records in your database">
+<h3>Count the number of records in your database</h3>
+
+If you need to find out how many files in your database, the easiest way is to get a directory listing and pipe its output through the wc (word count) command, with the -l flag (which counts the number of lines). You then have to subtract 1 from the result to account for the ls command's summary report. This code will assign the number of files in your data directory to a variable called dircount:
+<pre>
+dircount=`ls -l $InputPath| wc -l`
+dircount=`expr $dircount - 1`
+</pre>
+Note: That's an L at the end of the first line, and a one at the end of the second.
+<p>
+<a href="#top">top</a>
+
+
+
+
+
+
+
+
+
+
+<A NAME="Cut a string down to size">
+<h3>Cut a string down to size</h3>
+
+Sometimes the results of a command give you more information than you want to know. The catattr command, for example, yields output like:
+<P>
+<tt>screen1.tga : string : image/x-targa</tt>
+<P>
+If all you want is the MIME type at the end of this string, use the <tt>cut</tt> command to whittle it down. Cut sees strings by the number of fields they contain. It determines how many fields there are based on a single character separator. In the string above, we could cut the third field, using the colons as field delimiters:
+<P>
+<tt>cut -f3 -d:</tt>
+<P>
+The number following the "f" is the field number, and the character following the "d" is the field delimiter. If you need to use a character that might be misinterpreted by the shell, you need to "escape" it by preceding it with a "\" (backslash, not forward). This is important if you need to use a space as a delimiter. We could do the same thing as above using spaces as delimiters rather than colons:
+<P>
+<tt>cut -f5 -d\ </tt>
+<P>
+(There's a space after the d\ ). This is a little more elegant, because the result doesn't have a space in it, as it does when separating by colons. Field delimiters, unfortunately, are limited to a single character.
+<p>
+<a href="#top">top</a>
+
+
+
+
+
+<A NAME="Search and replace text in a string">
+
+<h3>Search and replace text in a string</h3>
+
+There are a number of ways to do this, but the tool used in these TrackerBase scripts is sed (the stream editor). sed has many options, but at its simplest it works like this. Let's say the value of $Dir is "/boot/apps/TrackerBase". If you want to change that to /boot/home/TrackerBase, you could use the echo command to output the value of $Dir, then pipe that into the sed command, which runs the replacement:
+<P>
+<tt>echo $Dir | sed s/apps/home/g</tt>
+<P>
+The "s" means sed should run a substitution, and the "g" means it should happen globally (for every found occurrence, not just the first one).
+<p>
+<a href="#top">top</a>
+
+
+
+
+
+
+<A NAME="Delete lines from output">
+
+<h3>Delete lines from output</h3>
+
+The output of a command may contain lines that you want to eliminate. For example, a command-line query will search through the user's trash along with the rest of the system. You can filter out unwanted lines by piping your output through the sed command and using the "d" option.
+<P>
+query [query formula here] | sed /Trash/d
+
+<p>
+<a href="#top">top</a>
+
+
+
+
+<A NAME="Terminal queries">
+
+<h3>Terminal queries</h3>
+
+In many scripts, you'll want to act on the results of a system query, rather than looking at all the files in a directory. After all, this is where the real power of a database emerges. See the <a href="queries.html">Queries</a> page for details.
+<p>
+<a href="#top">top</a>
+
+
+
+
+
+<A NAME="Use if/then statements">
+<h3>Use if/then statements</h3>
+
+Sometimes you need to perform an action only if certain conditions are true. An if/then statement lets you do that. In this example, we create a link to a URL only if the $URL variable has a value (-z means "not null").
+
+<pre>
+if [ -z $URL ]; then
+	echo
+else
+	echo "More info: &lt;A HREF=$URL&gt;$URL&lt;/A&gt; &lt;BR&gt;"
+fi
+</pre>
+
+If the $URL variable is empty, the script prints a blank line. Otherwise (else) it constructs a link. You can also use an "=" operator to be more specific. If you only wanted to create a link if the value of $URL was http://www.be.com, you'd do it like this:
+
+<pre>
+if [ "$URL" = "http://www.be.com" ]; then
+	echo "More info: &lt;A HREF=$URL&gt;$URL&lt;/A&gt; &lt;BR&gt;"
+fi
+</pre>
+
+Note that the "else" part is not required -- just use it if you need it. You can also check for the existence of a certain file, with the -f flag. Let's say that a variable called $FileName represents the index file being generated, and you want your script to check for its existence before it begins so it can delete it before creating it.
+
+ <pre>
+if [ -f $FileName ]; then
+	rm $FileName
+fi
+</pre>
+
+
+Always close these statements with "fi". Pay close attention to the spacing in the [ ] block. Miss one of those spaces and the whole thing will stop working.
+<p>
+<a href="#top">top</a>
+
+
+
+
+
+
+
+
+
+
+<A NAME="Act on every file in a directory">
+<h3>Act on every file in a directory</h3>
+
+To perform an action on every file in a given directory, use the for/do construct:
+<P>
+<pre>
+for ThisFile in *; do
+	catattr BEOS:TYPE $ThisFile
+done
+</pre>
+Always finish a block like this with "done."
+<p>
+<a href="#top">top</a>
+
+
+
+
+
+
+
+
+<A NAME="Write the results of a command block to a file">
+<h3>Write the results of a command block to a file</h3>
+
+By surrounding a block of commands in {brackets} and then using the &gt; redirect operator, you can have the shell execute all of those commands and write the results to a text file. For example, the following block would create a file called /boot/home/attributes.txt containing a list of filetypes for all files in the current directory. For example:
+
+<PRE>
+{
+	Dir=`pwd`
+	echo "Extracting attributes in $Dir..."
+	catattr BEOS:TYPE $Dir/*
+	echo "Done."
+
+} &gt; /boot/home/attributes.txt
+</PRE>
+This example will create the file fresh, even if a file with that name already exists. If you want to append the results to the file rather than overwriting it, use double redirectors:
+
+<PRE>
+{
+	[some commands here]
+
+} &gt;&gt; /boot/home/attributes.txt
+</PRE>
+
+<p>
+<a href="#top">top</a>
+
+
+
+
+
+
+
+<A NAME="Read in lines from a text file">
+<h3>Read in lines from a text file</h3>
+
+Sometimes you want to take an action on every line in a text file. Several of these scripts create lists of all the files they have to act on. This isn't the fastest way to do things, but it can simplify things somewhat, and lets you examine the list for yourself if you need to. These scripts use the read command inside of a "while" loop. Let's say we've created a temp file containing a list of all the files we need to act on, and now we want to print the MIME type for each of those files to the screen.
+<pre>
+{
+	while read ThisLine; do
+		Type=`catattr BEOS:TYPE $ThisLine`
+		echo "The filetype of $ThisLine is $Type"
+	done
+} &lt; /tmp/filelist
+</pre>
+
+filelist is fed into the whole block, and the <tt>read</tt> command understands that it should read just one line at a time. Always close a while block with "done."
+
+<p>
+<a href="#top">top</a>
+
+
+
+
+
+
+
+
+
+<A NAME="Define and invoke functions">
+<h3>Define and invoke functions</h3>
+
+Sometimes you want to create "routines," or blocks of commands, that you can invoke from elsewhere in your script. Use this format:
+
+<pre>
+DoPage(){
+	[command one]
+	[command two]
+	[command three
+}
+</pre>
+
+This function, called DoPage, will not run automatically. To make it run, just type "DoPage." Functions can be invoked as subroutines from within other functions. For example, if you examine the <a href="simple.html">SimpleTest</a> script, you'll see that it has two major functions: IndexPage and DoPage. It starts running IndexPage. When it creates a link to another page, it jumps to the DoPage function and runs that, which creates the page that's just been linked to. The order of functions in a script is not important, but you cannot invoke a function that hasn't been read in yet. A good way to organize a script based on functions is to put them all at the top, then invoke them in order at the bottom of the script. For example:
+
+
+<pre>
+Prep(){
+	[command one]
+	[command two]
+}
+
+IndexPage(){
+	[command a]
+	[command b]
+		DoPage
+	[command c]
+}
+
+DoPage(){
+	[command I]
+	[command II]
+	[command III]
+}
+
+### Now run them:
+
+Prep
+IndexPage
+
+</pre>
+
+<a href="#top">top</a>
+
+<P>
+<IMG SRC="gfx/tbase.icon.jpg" ALIGN="RIGHT">
+<P>
+
+			</TD>
+		</TR>
+	</TABLE>
+
+
+
+
+</body>
+</html>

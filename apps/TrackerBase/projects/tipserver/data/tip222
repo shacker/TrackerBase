@@ -1,0 +1,3 @@
+If there are search and replace strings you find yourself having to run repeatedly, Pe can remember them  so you never have to type them in again. Pull down Window | Preferences | Grep Patterns and add a new search and replace operation (with or without regular expressions). 
+<P>
+Give your pattern a memorable name, click Apply, then re-open the Find dialog. To the left of the Find field is a Find button. Click the Find button, and all of your named patterns wil appear on a context menu. Select one, and the pattern you just entered in Preferences will pre-fill the Find and Replace fields.

@@ -1,0 +1,24 @@
+<img src="../images/246pulse.jpg" align=left hspace=10>
+
+As of R4, Pulse gains a number of configurable options not formerly present. To get a list of all options, type 
+<P> 
+ <TT>Pulse --help</TT> 
+<P> 
+into Terminal. Pulse can be run in "mini" mode by specifying the <TT>--mini</TT> flag and following it by a width in pixels, for example: 
+<P> 
+<TT>Pulse --mini --width=100</TT>. 
+<P> 
+You can also specify a color for the LEDs in both idle and active states, and for the frame border. For example: 
+<P> 
+<TT> 
+Pulse --mini --width=100 --activecolor 0x2e8b57 --idlecolor 0xfa8072 
+</TT> 
+<P> 
+Though I prefer to run Pulse in this manner as a Replicant in the Desktop, you can also now shove Pulse into the Deskbar by specifiying a width of 9: 
+<P> 
+<TT> 
+Pulse --mini --deskbar --width 9 & 
+</TT> 
+<P> 
+See the tip <A HREF="/cgi-bin/chunga.pl?ID=tip108">Tweaking WindowShade</A> for more on finding equivalencies between colors and their hex values. 
+<P> 

@@ -1,0 +1,12 @@
+There are two ways to establish a file's type from the command line. The first is to use the <TT>addattr</TT> command, like this:
+<P>
+<TT>addattr  BEOS:TYPE text/html filename(s)</TT>
+<P>
+This works just fine when the file or files in question don't yet have a filetype. If they do, the existing type will be overwritten with the new type. 
+<P>
+To achieve the same effect but with somewhat simpler syntax, try the 
+ <TT>settype</TT> command, which can be used with a -t flag to establish a MIME type, or with an -s flag to establish a signature. For example:
+<P>
+<TT>settype -t text/html filename(s)</TT>
+<P>
+This way you can change a filetype directly, without having to remove the existing type first.

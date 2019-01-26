@@ -1,0 +1,124 @@
+#! /bin/sh
+
+### TrackerBase.simple -- This is the "bare bones" TrackerBase
+### demo, left as uncomplicated as possible for readability,
+### and for use as a starter template.
+
+# Scot Hacker, 8/98. Updates at http://www.birdhouse.org/beos/software
+# Comments to beos@birdhouse.org. See readme.html for info.
+
+
+# Start by establishing some paths so the script knows where
+# to look for data, and where to dump its results. You'll need
+# to change the first line if you put this package anywhere
+# else than /boot/apps.
+
+Base=/boot/apps/TrackerBase/projects/simpletest
+InputPath=$Base/data
+OutputPath=$Base/output
+PartPath=$Base/parts
+FileName=index.html
+
+
+# Now we're going to start building the menu (index) page.
+# As we get to each chapter, we'll branch off, create
+# the page for that chapter, and then return. We'll finish
+# the index and the story pages as the same time.
+
+# Thus, there are two "functions on this page" -- one for each 
+# page type. It's necessary that the machine read all functions
+# in their entirety before they're invoked, so they don't actually
+# get called until the end of the page.
+
+## Prepre by creating a sorted temp list of all the files in the
+#data directory. There are other ways to do this, but I find
+# this a little easier.
+
+Prep(){
+	ls $InputPath | sort	
+} > /tmp/partlist
+
+
+
+# Start by sucking in some blocks of static HTML.
+
+IndexPage(){
+	
+	cat $PartPath/headerdata
+	cat $PartPath/prequel	
+
+# We're going to loop through every file named in the 
+# temp file, read in its attributes, and use those as variables.
+	
+	{
+	while read ThisLine; do
+
+		Title=`catattr TBASE:title "$InputPath/$ThisLine" | cut -f5-15 -d\ `
+		Author=`catattr TBASE:author "$InputPath/$ThisLine" | cut -f5-15 -d\ `
+
+# Now we've got the attributes for the current file, and we can
+# drop them into an HTML page. 
+
+	echo "<H3><A HREF=$OutputPath/bin/$ThisLine.html>$Title</A> </H3>"
+
+# We just built a link to a page that doesn't yet exist. Let's go build 
+# it by invoking the second function. Set the MIME types on the
+# generated HTML docs.	
+		
+	SubPage
+	addattr BEOS:TYPE text/html $OutputPath/bin/$ThisLine.html
+				
+	done
+	} < /tmp/partlist
+	
+# Add in the footer of the index page	
+	cat $PartPath/footer	
+
+# The line below redirects the results of this entire function 
+# to a file, which is our index page.
+	
+} > $OutputPath/$FileName
+
+
+
+SubPage(){
+	
+# Again, we'll use the cat command to pour big chunks
+# of HTML onto the page we're creating. Note that the
+# variable $i (which is the current database record) carries 
+# over just fine into another function. We'll mix and match
+# echoed variables with blocks of HTML until the page is built.
+
+	cat $PartPath/headerdata
+	echo "<h2>$Title</h2>"
+	cat $InputPath/$ThisLine
+	echo "<P>"
+	echo "<A HREF=../$FileName>Return to menu</A>"
+	cat $PartPath/footer
+	
+} > $OutputPath/bin/$ThisLine.html
+
+
+# Way down here is where the whole thing actually 
+# gets set into motion, by invoking the name of the
+# first function.
+
+# A little user feedback is always good.
+
+echo
+echo Parsing the database ...
+
+# Do a little prep work (just make a sorted temp file to read from)
+	Prep
+
+echo
+echo Generating HTML pages...
+
+# Invoke the Index page function. Set the MIME type when done.
+	IndexPage
+	addattr BEOS:TYPE text/html $OutputPath/$FileName
+
+echo
+echo Done. Your output is at $OutputPath
+
+NetPositive $OutputPath/$FileName &

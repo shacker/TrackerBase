@@ -1,0 +1,17 @@
+NetPositive stores a default window size and position, recorded at the moment you close the last instance of all currently open Net+ windows. Therefore, when you tap Alt+N or Alt+L to launch a new NetPos window, it will appear in the size and position of the first opened window, not the one you're currently staring at. 
+<P> 
+When closing NetPositive, make sure the last window you close is sized and positioned exactly as you like it. New Net+ windows will then appear with the same size and position.
+<P> 
+If you don't want NetPositive to save the last window position every time it quits, use the tip 
+<A HREF="/cgi-bin/chunga.pl?ID=tip235">Access hidden NetPostitive settings</A> to  turn off the "SaveWindowPos" setting.  In this case, open a Terminal window and type: 
+<PRE> 
+rmattr SaveWindowPos ~/config/settings/NetPositive/settings 
+addattr -t bool SaveWindowPos false ~/config/settings/NetPositive/settings 
+</PRE> 
+That way, if you get your "perfect" window position, you can turn off the preference to save it in the future, and it will be preserved forever. 
+<P> 
+For the brave, you can manipulate the window rectangle directly through the "DefaultBrowserWindowRect" preference, though you'll have to manipulate a RECT attribute to do so.  Good luck. 
+<P> 
+There's the usual caveat to not make business decisions based on these preferences always being there in this form; they are subject to change in the future. 
+<P> 
+In a future version (probably R5), the secret preferences will no longer be secret: there will be some sort of UI to set all of them; though the more arcane ones will likely require an extra step to get to them, so as not to confuse non-power-users. 

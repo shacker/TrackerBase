@@ -1,0 +1,19 @@
+As of R4, the Desktop becomes the root of the filesystem, meaning that all of your mounted disk volumes are mounted directly on the Desktop, rather than in the Disks window. Depending on your OS heritage and personal preferences, this may or may not be what you want. For example, if you've got dozens of mounted disk volumes, you may find that this results in a very cluttered Desktop. Or, you may simply prefer the R3 Disks window to the new "Mac-style" mounting method. Fortunately, you have the option to bring it back. 
+
+Open the file <TT>~/config/settings/Tracker/TrackerSettings</TT> in a text editor. The first lines should read: 
+<P> 
+<TT> 
+ShowDisksIcon off<BR> 
+MountVolumesOntoDesktop on 
+</TT> 
+<P> 
+Just toggle the 'off' and 'on' arguments of these two lines, save the file, and <A HREF="/cgi-bin/chunga.pl?ID=tip017">restart Tracker
+</A> to return the Desktop to more R3-like behavior. 
+
+<P>
+<b>Note:</b> You <i>must</i> restart the Tracker. If you try to simply reboot, the changes won't take hold, because when Tracker quits, it writes out it's settings. If you make changes with Tracker running, they will get wiped out. This will get cleaned up when BeOS gets a Tracker preferences panel.
+
+<P> 
+You'll notice that this settings file also contains options for configuring the behavior of the Desktop when you have multiple BeOS volumes mounted. Because the Desktop is an aggregation of all mounted Desktop directories, you can end up with duplicate icons on your Desktop if you have the same folders or files living on multiple mounted volumes. Just toggle these settings between 'off' and 'on' to achieve the desired behavir. 
+<P> 
+Finally, this settings file will let you establish whether the Desktop should appear as the root of the filesystem when working in BeOS file panels. 

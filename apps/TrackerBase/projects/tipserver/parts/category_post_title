@@ -1,0 +1,39 @@
+</head>
+<body BGCOLOR="#FFFFFF" BACKGROUND="/backgrounds/blue_bak2.jpg"  TEXT="#000000" LINK="#3D59AB" VLINK="#708090">
+
+ 
+
+	 
+	<TABLE WIDTH=640 border=0 CELLPADDING=0>
+		<TR>
+			<TD WIDTH=140 valign=top>
+
+<img src="/backgrounds/blank1.gif" width=130 height=5 alt="blank1">
+<b>
+<p>
+<img src="/beos/tips/images/nav.gif" width=129 height=253 border=0 alt="nav" align="left" usemap="#nav">
+
+<BR clear=all>
+<img src="/backgrounds/blank1.gif" width=10  height=20 alt="blank1"><BR>
+
+	<FORM METHOD=POST ACTION="/cgi-bin/tipsearch.pl">
+	<CENTER>
+		<FONT COLOR="#FFFACD" SIZE=+1>Search:</FONT><BR>
+	<INPUT TYPE=TEXT NAME="terms" SIZE=12> 
+	</CENTER>
+	</FORM>
+
+
+</b>
+
+			</TD>
+
+			<TD VALIGN=TOP WIDTH=500>
+			
+
+<CENTER>
+<FONT FACE="Humnst777 BT, Arial, Helvetica">
+
+<P>&nbsp;<BR>
+
+

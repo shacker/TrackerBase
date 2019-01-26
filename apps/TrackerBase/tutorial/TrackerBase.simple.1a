@@ -1,0 +1,38 @@
+#! /bin/sh
+
+# Simplest script of them all. simple.1a just concatenates 
+# four blocks of raw HTML into a single document.
+
+# Start by establishing some paths so the script knows where
+# to look for data, and where to dump its results. You'll need
+# to change the first line if you put this package anywhere
+# else than /boot/apps.
+
+Base=/boot/apps/TrackerBase/projects/simpletest
+InputPath=$Base/data
+OutputPath=$Base/output
+PartPath=$Base/parts
+FileName=index.html
+
+# Define a function called IndexPage that
+# sucks in some blocks of static HTML.
+
+IndexPage(){
+	
+	cat $PartPath/headerdata
+	cat $PartPath/contents1
+	cat $PartPath/contents2		
+	cat $PartPath/footer
+	
+} > $OutputPath/$FileName
+
+# Invoke the function above.
+
+IndexPage
+
+# Report back to user and launch the page.
+
+echo
+echo Done. Your output is at $OutputPath
+
+NetPositive $OutputPath/$FileName &

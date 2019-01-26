@@ -1,0 +1,189 @@
+#! /bin/sh
+
+### TrackerBase.news ###
+# Builds "news style" sequential pages based on attributes 
+# and a date-sorting algorithm. 
+
+# Scot Hacker, 8/98. Updates at http://www.birdhouse.org/beos/software
+# Comments to beos@birdhouse.org. See readme.html for info.
+
+
+# User and path variables
+Base=/boot/apps/TrackerBase/projects/news_site
+InputPath=$Base/data
+OutputPath=$Base/output
+PartPath=$Base/parts
+FileName=index.html
+
+# HTML variables
+TitlePre="<font size=+2 color=#CE7D6C>"
+TitlePost="</font><BR>"
+
+
+### Start creating functions, to be invoked later.
+
+CleanSlate(){
+# Remove the existing index file, create a new one, install
+# the header, and give it the right MIME type.
+
+	if [ -f $OutputPath/$FileName ]; then
+		rm $OutputPath/$FileName
+	fi
+	touch $OutputPath/$FileName
+	cat $PartPath/header >> $OutputPath/$FileName
+	addattr BEOS:TYPE text/html $OutputPath/$FileName
+
+}
+
+
+
+DoDate(){
+# This function creates the horizontal day dividers by reading
+# in HTML from the parts directory, inserting day and date from
+# another function, and spitting out to a file.
+
+	cat $PartPath/divider.pre
+	echo $CurrentDate
+	cat $PartPath/divider.post
+	echo "<P>"
+	
+} >> $OutputPath/$FileName
+
+
+
+DoStory(){
+# The story creation routine. Concatenates chunks of HTML
+# with variables and writes results to the output file.
+
+Title=`catattr TBASE:title $InputPath/$ThisFile | cut -f5-15 -d\ `
+TimeStamp=`ls -l $InputPath/$ThisFile| grep -i "^.\{42\}$date" | cut -c43- | cut -f3 -d\ `
+PPCdl=`catattr TBASE:ppcdl $InputPath/$ThisFile | cut -f5-15 -d\ `
+X86dl=`catattr TBASE:x86dl $InputPath/$ThisFile | cut -f5-15 -d\ `
+Email=`catattr TBASE:email $InputPath/$ThisFile | cut -f5-15 -d\ `
+URL=`catattr TBASE:url $InputPath/$ThisFile | cut -f5-15 -d\ `
+Source=`catattr TBASE:source $InputPath/$ThisFile | cut -f5-15 -d\ `
+	
+	echo "<B>" $TimeStamp "</B><BR>"
+	echo $TitlePre
+	echo $Title
+	echo $TitlePost
+	cat $InputPath/$ThisFile
+	echo "<P>"	
+
+# Add the optional links if they're present.
+
+		if [ -z $PPCdl ]; then
+			echo 
+		else
+			echo "<A HREF=$PPCdl> PPC Download</A> <BR>"
+		fi
+
+
+		if [ -z $X86dl ]; then
+			echo 
+		else
+			echo "<A HREF=$X86dl>x86 Download</A> <BR>"
+		fi
+
+
+		if [ -z $URL ]; then
+			echo 
+		else
+			echo "More info: <A HREF=$URL>$URL</A> <BR>"
+		fi
+
+
+		if [ -z $Email ]; then
+			echo 
+		else
+			echo "Contact: <A HREF=mailto:$Email>$Email</A> <BR>"
+		fi		
+
+		
+		if [ "$Source" = " " ]; then
+			echo 
+		else
+			echo "Source: $Source<BR>"
+		fi		
+
+							
+	echo "<PRE>"
+	echo
+	echo "</PRE>"	
+
+} >> $OutputPath/$FileName
+
+
+FileLoop(){
+# Now loop through the reverse-sorted file list one line at a time.
+# For each line, find out its day and see whether its equal to the CurrentDay.
+# If so, do a story. If not, create a divider, then do a story.
+# We also check here to make sure the "publish" flag is set to "y."
+# If not, we skip this story.
+
+	while read ThisFile; do
+		PublishStatus=`catattr TBASE:publish $InputPath/$ThisFile | cut -f5 -d\ `
+		if [ "$PublishStatus" = "y" ]; then
+			ThisDay=`catattr TBASE:day $InputPath/$ThisFile | cut -f5-15 -d\ `
+				if [ "$ThisDay" = "$CurrentDate" ]; then
+					DoStory
+				else
+					CurrentDate=$ThisDay
+
+					DoDate
+					DoStory
+				fi
+		fi
+	done
+
+} < /tmp/filelist
+
+
+
+
+StarterDate(){
+# This is the first function to run that does real work.
+# Start by finding the most recent file, then getting 
+# the Day attribute for that file. This way we can always have 
+# the latest day be the top entry. We also establish a CurrentDay
+# variable for use in comparing days later on so we know
+# when to insert a divider. 
+
+	TopFile=`ls $InputPath | sort -r | head -1`
+	CurrentDate=`catattr TBASE:day $InputPath/$TopFile | cut -f5-15 -d\ `
+	
+# While we're here, create a temp file containing 
+# only the reverse-sorted filenames.
+	
+	ls $InputPath| sort -r >  /tmp/filelist
+
+}
+
+
+
+
+
+### All functions are now defined and we can run them in order.
+
+echo
+echo Crunching news.... shouldn\'t take long.
+echo
+
+CleanSlate
+StarterDate
+DoDate
+
+FileLoop
+
+# Drop the footer onto the bottom.
+cat $PartPath/footer >> $OutputPath/$FileName
+
+echo
+echo Done. Your news page is at $OutputPath/$FileName
+echo
+echo Launching now...
+
+rm /tmp/*
+
+# Comment out or remove the next line if you don't want autolaunching.
+NetPositive $OutputPath/$FileName &

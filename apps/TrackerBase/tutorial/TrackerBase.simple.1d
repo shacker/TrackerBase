@@ -1,0 +1,85 @@
+#! /bin/sh
+ 
+# This version (simple.1d) is identical to simple1c except
+# that it uses a different tactic. Instead of looping through
+# a directory, it creates a text list of the files to act on.
+# It then reads through that file and acts on each line.
+# 
+# The reason for this is that the previous method gives us
+# absolute path names, like
+# /boot/apps/TrackerBase/projects/simple/data/story001.
+# That's a problem because you can't use that path to
+# create an HTML link, because we have to link to a file
+# in the OutputPath, not the InputPath. This could be done
+# by running search and replace on the path strings, but
+# that's surprisingly complicated when there are slashes in
+# the variables and you have no guarantee of what the path
+# might be on the user's system. This method avoids all of that
+# by creating a list of plain filenames instead of full paths.
+
+# The usual variables
+
+Base=/boot/apps/TrackerBase/projects/simpletest
+InputPath=$Base/data
+OutputPath=$Base/output
+PartPath=$Base/parts
+FileName=index.html
+
+
+# Here's where we create the text list. Just a simple
+# "ls" of the files in the InputPath, sorted and written
+# to a file in the /tmp directory.
+
+Prep(){
+	ls $InputPath | sort	
+} > /tmp/partlist
+
+
+
+# Now we run the main function, but instead of a "for"
+# loop, we use a "while" loop that uses the text file as input.
+
+IndexPage(){
+
+# Start by sucking in some blocks of static HTML.
+	
+	cat $PartPath/headerdata
+	cat $PartPath/simple1dhead
+
+
+	echo "<FONT SIZE=+1>"
+
+# Note that the loop is now surrounded in {brackets}
+# so we can feed it the text file.
+
+{
+	while read ThisLine; do
+		Title=`catattr TBASE:title "$InputPath/$ThisLine" | cut -f5-15 -d\ `
+		echo "<A HREF="$OutputPath/$ThisLine.html">"$Title"<BR>"
+	done
+	
+# Grab the data that the read statement will use:	
+} < /tmp/partlist
+	
+	echo "</FONT>"
+	
+# Add in the footer of the index page	
+	cat $PartPath/footer	
+
+# The line below redirects the results of this entire function 
+# to a file, which is our index page.
+	
+} > $OutputPath/$FileName
+
+
+# Now we have two functions to invoke, instead of one:
+
+Prep
+IndexPage
+
+# User feedback:
+echo
+echo Done. Your output is at $OutputPath
+
+# Launch the new file in NetPositive.
+NetPositive $OutputPath/$FileName &

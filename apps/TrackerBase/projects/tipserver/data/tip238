@@ -1,0 +1,11 @@
+In R3, query results windows were "generic" and appeared the same regardless of the type of file you were searching for. This made little sense if you were hunting for, say, bookmark URLs, since the query would return the bookmark filenames without displaying the URLs you wanted to see unless you physically manipulated the Attributes menu. 
+<P> 
+R4 has much more intelligence in this department, and gives you 100% control over the appearance of query results windows for any given filetype. Take a look in 
+<TT>~/config/settings/Tracker</TT> and you'll find a folder called <TT>DefaultQueryTemplates
+</TT>. Within this folder you'll find a handful of folders named after common MIME types (but note that slashes have been replaced with underscores). Take for example the folder called 
+<TT>application_x-person</TT>. Drop a copy of one of your Person files into this folder and manipulate its Attributes menu to display whichever attributes are most important to you, such as just the name and email address. Drag columns into whatever order you please. 
+<P> 
+Close the folder, then run a system search on Person files -- the query results window will appear in the exact configuration you just established for that filetype. You can, of course, create a query template for any filetype on your system. 
+<P> 
+Note: You'll find another template folder in this directory as well: <TT>DefaultFolderTemplate
+</TT>. Because all Tracker windows inherit their configuration and layout from their parent folders by default, this template is used only when a parent folder cannot be found. The best example of such an instance is when you create a new folder on the Desktop. 

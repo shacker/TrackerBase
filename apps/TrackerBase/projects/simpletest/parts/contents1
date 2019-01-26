@@ -1,0 +1,18 @@
+<FONT COLOR="pink">
+
+	<h2>Contents1</h2>
+
+This script (simple.1a) demonstrates concatenating blocks of HTML into a single HTML file. It's composed of four files in the parts directory, glued end to end:
+<P>
+<pre>
+headerdata
+contents1
+contents2
+footer
+</pre>
+
+<P>
+
+This pink section comes from contents1.
+
+</FONT>

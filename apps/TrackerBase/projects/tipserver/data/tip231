@@ -1,0 +1,10 @@
+Bring text files over from MacOS or Windows and they'll display improperly in BeOS, which uses Unix-style line endings. To fix these files, use the tr command, for translate. You can get full details on tr with <TT>tr --help</TT>, but if you just want to fix files fast, here's the ticket:
+<P>
+To fix DOS/Windows text files, use:
+<P>
+cat original_file | tr -d '\r' > new_file
+<P>
+To fix Mac text, use:
+<P>
+cat original_file | tr '\r' '\n' > new_file
+

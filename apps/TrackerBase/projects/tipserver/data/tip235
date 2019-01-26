@@ -1,0 +1,90 @@
+NetPositive now has many more options and settings than it used to, but believe it or not, there are yet more configurable settings that you can't access from its Edit | Preferences menu. But before you bother looking around for a text-based configuration file, don't bother -- you won't find one, because preferences are now stored in attributes attached to 
+<TT>~/config/settings/NetPositive/settings</TT>. 
+<P> 
+You can use any method you like for editing these attributes (the command line, for instance), but you'll probably find that the easiest way is to drag this file onto the DiskProbe icon, then pull down DiskProbe's Attributes menu. Most settings are either on or off, as specified by a zero or a one. A good example of a setting you can edit from here that you can't establish by normal means are the HaikuErrorMessages -- set this Attribute to 0, close DiskProbe, restart NetPositive, and you'll now get standard, boring error messages from the browser. 
+<P> 
+If you'd like to make the process a little more user-friendly, save the script below (written by NetPositive's chief engineer, Scott Barta) to 
+<TT>/boot/home/config/bin/nphaiku</TT> and run either 
+<P> 
+nphaiku on<BR> 
+or<BR> 
+nphaiku off 
+<P> 
+from the command line. Note that you can easily hack this script to control other hidden NetPositive settings. 
+<P> 
+<PRE> 
+#!/bin/sh 
+
+# Script to enable and disable NetPositive haiku error messages. 
+# Scott Barta, Be Incorporated. 
+
+# See if the settings file exists.  Exit with an error 
+# message if it doesn't. 
+
+if [ ! -G ~/config/settings/NetPositive/settings ] 
+then 
+        echo 
+        echo "You must run NetPositive at least once for this script to work" 
+        echo "properly.  Please start NetPositive, quit NetPositive, and run" 
+        echo "this script again." 
+        echo 
+        
+        exit 1 
+fi 
+
+# See if NetPositive is running.  Exit with an error message if it is. 
+
+RUNNING=`/bin/roster | /bin/grep application/x-vnd.Be-NPOS` 
+if [ -n "$RUNNING" ] 
+then 
+        echo 
+        echo "NetPositive must not be running when this script is invoked." 
+        echo "Please quit NetPositive and run this script again." 
+        echo 
+        
+        exit 1 
+fi 
+
+if [ "$1" = "on" ] 
+then 
+
+        # Turn on haiku error messages. 
+
+        rmattr HaikuErrorMessages ~/config/settings/NetPositive/settings 
+        addattr -t bool HaikuErrorMessages 1 ~/config/settings/NetPositive/settings 
+
+        echo 
+        echo "NetPositive haiku error messages enabled." 
+        echo 
+        
+        exit 0 
+elif [ "$1" = "off" ] 
+then 
+
+        # Turn off haiku error messages. 
+
+        rmattr HaikuErrorMessages ~/config/settings/NetPositive/settings 
+        addattr -t bool HaikuErrorMessages 0 ~/config/settings/NetPositive/settings 
+
+        echo 
+        echo "Normal NetPositive error messages enabled." 
+        echo 
+        
+        exit 0 
+else 
+
+        # A correct option was not given.  Print out the help and exit. 
+
+        echo 
+        echo "NPHAIKU - Turns NetPositive haiku (poem) error messages on and off." 
+        echo "          Error messages are in haiku form by default." 
+        echo 
+        echo "USAGE:" 
+        echo 
+        echo "nphaiku on          - Turns haiku error messages on." 
+        echo "nphaiku off         - Turns haiku error messages off." 
+        echo 
+        
+        exit 1 
+fi 
+</PRE> 

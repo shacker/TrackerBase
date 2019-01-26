@@ -1,0 +1,17 @@
+<!-- IMAGE MAP -->
+<map name="nav">
+<area shape="rect" alt="Home" coords="6,24,108,42" href="/">
+<area shape="rect" alt="Applications" coords="5,55,109,69" href="/applications.html">
+<area shape="rect" alt="Audio" coords="5,70,110,83" href="/audio.html">
+<area shape="rect" alt="Hardware" coords="6,85,106,98" href="/hardware.html">
+<area shape="rect" alt="Interface" coords="6,99,104,113" href="/interface.html">
+<area shape="rect" alt="Miscellaneous" coords="5,116,105,129" href="/misc.html">
+<area shape="rect" alt="Networking" coords="6,131,103,144" href="/networking.html">
+<area shape="rect" alt="PPP" coords="6,145,102,158" href="/ppp.html">
+<area shape="rect" alt="Terminal" coords="5,159,102,174" href="/terminal.html">
+<area shape="rect" alt="Tracker and Deskbar" coords="6,175,104,190" href="/tracker.html">
+<area shape="rect" alt="Warnings" coords="5,191,102,203" href="/warnings.html">
+<area shape="rect" alt="Workspaces" coords="5,205,102,219" href="/workspaces.html">
+<area shape="rect" alt="Submit" coords="5,233,101,248" href="/submit/addtip.html">
+<area shape="default" nohref>
+</map>

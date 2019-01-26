@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>TrackerBase : SimpleTest</title>
+</head>
+<body  style="background-image:url(gfx/blue_bak.jpg); background-repeat: repeat-y;" TEXT="#000000" LINK="#711E08" VLINK="#D098A5">
+
+
+
+	<TABLE WIDTH=100% border=0 CELLPADDING=10>
+		<TR>
+			<TD WIDTH=130 valign=top>
+
+<img src="./gfx/blank1.gif" width=130 height=5 alt="blank1">
+<b>
+
+<FONT SIZE=+2 COLOR="#FFFFFF"><i>General</i></FONT>
+<FONT SIZE=+1 COLOR="#FFFFB3">
+<P><a href="about.html">About</a>
+<P><a href="how.html">How it works</a>
+<P><a href="usage.html">Usage</a>
+<P><a href="attributes.html">Attributes</a>
+<P><a href="queries.html">Queries</a>
+<P><a href="caveats.html">Caveats</a>
+<P><a href="tbase2.html">TBase II</a>
+</FONT>
+
+<FONT SIZE=+1 COLOR="#FFFFB3">
+<P><FONT SIZE=+2 COLOR="#FFFFFF"><i>Sample Code</i></FONT>
+<P><a href="simple.html">Simpletest</a>
+<P><a href="bepeople.html">BePeople</a>
+<P><a href="news.html">News site</a>
+<P><a href="tips.html">Tip server</a>
+<P><a href="snippets.html">Snippets</a>
+</FONT>
+
+</b>
+
+			</TD>
+
+			<TD VALIGN=TOP>
+
+<IMG SRC="gfx/tbase.icon.jpg" ALIGN="RIGHT">
+
+<FONT SIZE=+2 COLOR="#5E6EA5">SimpleTest</FONT>
+<p>
+ If you'd like to study the TrackerBase process without having to dig through all the clutter in some of the other scripts, this series of scripts constitutes a tutorial of sorts by breaking up site generation into discrete pieces, each building on the previous one.
+<P>
+If you want to do this  tutorial, drop the simple scripts into /boot/home/config/bin and run them in order. Start by running 1a,  study its script until you understand everything it's doing, then move to simple.1b and so on. The final script, simple.1e, combines the techniques in the others to actually generate a site. simple.1e's flowchart is below, for further study. All of these are heavily commented. Here are the steps for each section:
+<P>
+
+<b>simple.1a</b> -- Concatenates four text files into one HTML file.
+<P>
+<b>simple.1b</b> -- Writes the names of all files in the data directory to an HTML file.
+<P>
+<b>simple.1c</b> -- Gets the value of the Title attribute for every file in the data directory.
+<P>
+<b>simple.1d</b> -- The same as 1c, but uses a different loop method to get around a thorny problem that arises from the difference between absolute paths as the shell sees them, and relative paths as browsers see them.
+<P>
+<blockquote>
+
+<b>The problem: </b>when you loop through a directory, the files in it are seen by the shell with their full paths, e.g.:<BR>
+<tt> /boot/apps/TrackerBase/projects/simple/data/story001</tt>.
+<BR>
+ That's a problem because you can't use that path to
+ create an HTML link, since you have to link to a file
+ in the OutputPath, not the InputPath. This could be accomplished
+ by running search and replace on the path strings, but
+ that's surprisingly complicated when there are slashes in
+ the variables and you have no guarantee of what the path or path depth
+ might be on the user's system. So rather than getting into regular expressions, we use a workaround.
+<P>
+<b>The solution: </b> Instead of looping through
+ a directory, we can just run a simple, unadorned <tt>ls</tt> command on the InputPath and filter it through <tt>sort</tt> to make sure the files will be read in order. Write this list to a file, and now we've got a list of files that isn't attached to any particular path. This makes things more modular, since we can prepend other paths to the filenames as needed, e.g. $InputPath/$filename or $OutputPath/$filename. It's a  bit slower, but easier to work with.
+<P>
+Thus, simple.1d adds a second function, called Prep, that creates the list before running the main function.
+</blockquote>
+
+
+<b>simple.e</b> -- Adds a third function, called SubPage, that creates the actual data pages. The main IndexPage function includes a jump to the SubPage function, so that one new page is created every time a link is made, until the list file is exhausted.
+<P>
+
+By studying this page, each of the simple scripts, and the <a href="snippets.html">Snippets</a> page, you should have everything you need to start building your own scripts.
+
+<h3>Flow Chart for simple.1e</h3>
+
+Here's simple.1e, transcribed into plain English:
+<OL>
+<P>
+<LI>Tell the user we're starting.
+<P>
+<LI>Get a directory listing and save it to a text file; essentially a list of the files we want to process.
+<P>
+<LI>Run a function, or block of commands, called IndexPage. Within that function, these things happen:
+<P>
+<LI>Spit back the HTML header and another small HTML block from the parts directory.
+<P>
+<LI>Open the file list and start reading it one line at a time. Each line represents a file in the directory. For each line (file), do these things:
+<P>
+<OL>
+
+	<LI>Extract Title and Author attributes from the current file
+	<P>
+	<LI>Create a link to that section of the story
+	<P>
+	<OL>
+		<LI>Remembering which file we're on, jump out of the IndexPage function and go do another function, called SubPage, which will build a story section page.
+		<P>
+		<LI>Grab that static file header again.
+		<P>
+		<LI>Print the page's title
+		<P>
+		<LI>Dump the story's actual contents onto the page
+		<P>
+		<LI>Make a link back to the index page, then close the HTML document and write it to a location on the disk specified in the script's variables (a "bin" subdirectory of the OutputPath.
+		<P>
+		<LI>Now jump back into the IndexPage function, picking up where we left off.
+	</OL>
+</OL>
+<P>
+<LI>Set the MIME type of the file we just created to text/html
+<P>
+<LI>Lather, Rinse, Repeat until we've done this for every line in the list. When at the end of the list, close the menu page document and write it to a predefined location.
+<P>
+<LI>Report to the user that we're done, and launch the index page in NetPositive.
+</OL>
+
+<P ALIGN=RIGHT>
+Next: <a href="bepeople.html">BePeople</a>
+<P>
+<IMG SRC="gfx/tbase.icon.jpg" ALIGN="LEFT">
+<P>
+
+			</TD>
+		</TR>
+	</TABLE>
+
+
+
+
+</body>
+</html>

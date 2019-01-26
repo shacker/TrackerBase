@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>TrackerBase : Be People</title>
+</head>
+<body  style="background-image:url(gfx/blue_bak.jpg); background-repeat: repeat-y;" TEXT="#000000" LINK="#711E08" VLINK="#D098A5">
+
+
+
+	<TABLE WIDTH=100% border=0 CELLPADDING=10>
+		<TR>
+			<TD WIDTH=130 valign=top>
+
+<img src="./gfx/blank1.gif" width=130 height=5 alt="blank1">
+<b>
+
+<FONT SIZE=+2 COLOR="#FFFFFF"><i>General</i></FONT>
+<FONT SIZE=+1 COLOR="#FFFFB3">
+<P><a href="about.html">About</a>
+<P><a href="how.html">How it works</a>
+<P><a href="usage.html">Usage</a>
+<P><a href="attributes.html">Attributes</a>
+<P><a href="queries.html">Queries</a>
+<P><a href="caveats.html">Caveats</a>
+<P><a href="tbase2.html">TBase II</a>
+</FONT>
+
+<FONT SIZE=+1 COLOR="#FFFFB3">
+<P><FONT SIZE=+2 COLOR="#FFFFFF"><i>Sample Code</i></FONT>
+<P><a href="simple.html">Simpletest</a>
+<P><a href="bepeople.html">BePeople</a>
+<P><a href="news.html">News site</a>
+<P><a href="tips.html">Tip server</a>
+<P><a href="snippets.html">Snippets</a>
+</FONT>
+
+</b>
+
+			</TD>
+
+			<TD VALIGN=TOP>
+
+<IMG SRC="gfx/tbase.icon.jpg" ALIGN="RIGHT">
+
+<FONT SIZE=+2 COLOR="#5E6EA5">BeOS People Files --> HTML</FONT>
+<p>
+The bepeople script runs through your /boot/home/people directory and creates an HTML index listing all of your personal and business contacts on a single page.
+<P>
+If you don't have any People files on your system, you'll find a file called people.tbase.zip in the bepeople projects folder. This contains 9 dummy files you can use for testing. Delete it if you already have Person files.
+<P>
+After running the TrackerBase.bepeople script, you can email anyone with a single click, or click on people's names to launch a separate details page. These pages won't win any design awards, but you can take care of that; I just wanted to get it working.
+<P>
+This script is the slowest of the lot, perhaps because it has to look up every single attribute. This is also the only script here to use the "read" command to get user input rather feeding the read command a text file. Enter your name at the prompt and it'll show up in the HTML docs. BePeople is the only script in the collection that doesn't use TrackerBase files -- it just applies the same principles to People files and their attributes.
+<P>
+The other interesting thing this script does is to use a toggle variable -- with every loop through, it flips a switch, which is what enables the table on the index page to be striped. The cell color variables are easily accessible -- just insert standard Netscape or hexadecimal colors (<a href="http://www.rodesign.com">RoColor</a> is a great tool for this!)
+<P>
+This script doesn't use queries, but it easily could. Excercise for the reader:  hack this script to only display People who live in, say, Illinois and Alabama. Or re-write / re-arrange it to group people by the first letter of their last names, inserting a divider of a third color for each new letter.
+
+<P ALIGN=RIGHT>
+Next: <a href="news.html">News Site</a>
+<P>
+<IMG SRC="gfx/tbase.icon.jpg" ALIGN="LEFT">
+<P>
+
+			</TD>
+		</TR>
+	</TABLE>
+
+
+
+
+</body>
+</html>

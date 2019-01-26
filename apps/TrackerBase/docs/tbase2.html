@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>TrackerBase II : Dynamic site generation techniques</title>
+</head>
+<body  style="background-image:url(gfx/blue_bak.jpg); background-repeat: repeat-y;" TEXT="#000000" LINK="#711E08" VLINK="#D098A5">
+
+
+
+	<TABLE WIDTH=100% border=0 CELLPADDING=10>
+		<TR>
+			<TD WIDTH=130 valign=top>
+
+<img src="./gfx/blank1.gif" width=130 height=5 alt="blank1">
+<b>
+
+<FONT SIZE=+2 COLOR="#FFFFFF"><i>General</i></FONT>
+<FONT SIZE=+1 COLOR="#FFFFB3">
+<P><a href="about.html">About</a>
+<P><a href="how.html">How it works</a>
+<P><a href="usage.html">Usage</a>
+<P><a href="attributes.html">Attributes</a>
+<P><a href="queries.html">Queries</a>
+<P><a href="caveats.html">Caveats</a>
+<P><a href="tbase2.html">TBase II</a>
+</FONT>
+
+<FONT SIZE=+1 COLOR="#FFFFB3">
+<P><FONT SIZE=+2 COLOR="#FFFFFF"><i>Sample Code</i></FONT>
+<P><a href="simple.html">Simpletest</a>
+<P><a href="bepeople.html">BePeople</a>
+<P><a href="news.html">News site</a>
+<P><a href="tips.html">Tip server</a>
+<P><a href="snippets.html">Snippets</a>
+</FONT>
+
+</b>
+
+			</TD>
+
+			<TD VALIGN=TOP>
+
+<IMG SRC="gfx/tbase.icon.jpg" ALIGN="RIGHT">
+
+<FONT SIZE=+2 COLOR="#5E6EA5">TrackerBase II : Dynamic site generation techniques</FONT>
+<p>
+
+Most of the TrackerBase system in this package is designed for creating static sites from the BFS database - for generating normal HTML pages that can be uploaded to any web server.
+<P>
+"Real" database-driven web sites assemble pages on the fly, as they're requested. This portion of the TrackerBase system is used for dynamic web site generation from the BFS database, for use with any cgi-capable BeOS web server, such as Robin Hood or Apache.
+<P>
+Getting this part of TrackerBase up and running is not as easy as the rest of the TrackerBase system. You will probably need at least basic experience working with perl, and you will need to tweak a lot of variables in the sample files provided here.  Documentation on these files is not nearly as complete as on the rest of the TrackerBase system. I probably will not be able to support you if you run into problems, sorry.
+
+<P>
+In order for this part of the TrackerBase system to work, you must have installed the basic TrackerBase package, perl for BeOS, as well as the BFS attribute extraction modules for perl. For instructions, see:
+<P>
+<a href="http://www.betips.net/cgi-bin/chunga.pl?ID=tip318">Installing and using CPAN perl modules</a>
+<P>
+You must also have a BeOS web server up and running.
+<P>
+Open /boot/apps/TrackerBase/TrackerBase II and you'll find four files. You'll need to put these into place manually, as follows.
+
+<P>
+There are two components to the dynamic TrackerBase II page generation scheme:
+ <P>
+1) The script and associated files that regenerate the site's menu pages, and <BR>
+2)  The script and associated files that generate individual web pages on the fly.
+<P>
+On betips.net, step 1 (menu page generation) is accomplished by running TrackerBase.pl from the command line. TrackerBase.pl invokes TrackerBase.pm as it runs. Therefore:
+<P>
+<b>Place TrackerBase.pl in ~/config/bin<BR>
+Place TrackerBase.pm in ~/config/lib/perl5/site_perl/5.005</b>
+<P>
+On betips.net, step 2 (live page generation from attributes) is accomplished by invoking chunga.pl* from a web browser, which relies in part on HTML stored in chunga.tip.template. Therefore:
+<P>
+<b>Place chunga.pl in your site's cgi-bin directory<BR>
+Place chunga.tip.template in a "templates" folder on your site.</b>
+<P>
+You will probably have to tweak variables in all of these files to match locations on your machine.
+<P>
+<i>*This version of chunga.pl was written mostly by BeGirl (Tori) - thanks for your contribution, Tori.</i>
+
+
+
+<P>
+<IMG SRC="gfx/tbase.icon.jpg" ALIGN="LEFT">
+<P>
+
+			</TD>
+		</TR>
+	</TABLE>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+On BeOS for PowerPC, you can double-click a Terminal preferences file to launch it. However, a bug in BeOS for Intel has always prevented this convenience. If you'd like to create a folder full of Terminal settings files with different colors and fonts, here's how to work around the bug. 
+<P>
+1) Set Terminal's fonts and colors however you like them, then pull down Settings | Save As Settings File. Save to a subdirectory of /boot/home/config/settings (I use my <A HREF="/beos/software/">TermSet</A> folder).
+
+<P>
+2) Open your system's Preferences | FileTypes panel and scroll down to the type application/x-vnd.Be-pref and change its preferred application from Connect to Terminal (this is where the bug is being corrected).  Optionally, drop a custom icon into the blank icon well to make your new Terminal icons easily identifiable
+
+<P>
+3) Open the folder where you store your Terminal settings files, and you'll find that you can now double-click to open them.  You may want to create a link to this folder on your desktop, or create links to individual Terminal settings files on your desktop instead.
+<P>
+Now you can have multiple Terminal windows open in multiple colors and fonts for easy identification. Remember that you can toggle between your open Terminal windows with Alt+G!
+<P>
+For similar capabilities from the command line, download <A HREF="/beos/software/">TermSet</A>.

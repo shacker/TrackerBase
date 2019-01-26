@@ -1,0 +1,63 @@
+When building a multi-boot system, always install Microsoft operating systems first, then BeOS, Linux, or whatever you like afterwards. This is not a requirement, but will probably make life easier since most versions of Windows have a nasty habit of installing their own Master Boot Record (MBR), overwriting any you might have had in place for other systems. The problem can be rectified by restoring the MBR with:
+<P>
+fdisk /mbr
+<P>
+from within DOS, or by reinitializing System Commander, LILO, or whatever you use as a boot manager. Nevertheless, it's easier to avoid all of this by letting MS have its way with your hard drive first, then installing your superior operating system second, third, etc.
+<P>
+Note: A possible caveat to this is the fact that the OS layed down first will reside closer to the inside of the disk platter and will enjoy faster disk access. See <a href="/cgi-bin/chunga.pl?ID=tip399">Maximizing disk throughput</a> for more on that.
+
+<P>
+Here are some more detailed notes on the subject from an anonymous contributor:
+<P>
+------------
+<P>
+My own personal experience is that Microsoft's products are the most
+fragile, and likely to screw other OSes up, so I always install them first.
+Then I try to do as little as possible to disrupt them, i.e., don't muck
+with partitions if you can help it.
+<P>
+Here's what I'd do (caveat: it's been a while since I did this):
+<P>
+0. Plan it all out on paper. Figure out how much disk space you want to
+give to each OS, and for Linux decide how you want to manage your multiple
+file systems and partitions. Windows should go on the first hard partition
+of your drive. BeOS and Linux are both very flexible about where they can
+go; BeOS R4 probably has the edge on really big disks, as LILO has
+difficulties if your boot partition is above the 8 gig point on your disk
+(as did R3).
+<P>
+My order at home is:
+<P>
+ Partition 1: Windows 95 (someday I'll upgrade to 98, I'm sure)<BR>
+ Partition 2: BeOS<BR>
+ Partition 3: Linux root partition<BR>
+ Partition 4: Extended partition<BR>
+  Logical partition 5: Linux swap<BR>
+  Logical partition 6: Linux /home (or /usr, or some damn thing)<BR>
+  Logical partition 7: Linux /var (or /home, or /usr, or some damn thing)<BR>
+<P>
+0.5 If you have a partitioning tool, partition your drive now, before you
+install anything. Otherwise, just use the tools that come with each OS (I
+used Linux's fdisk to do my partitioning, but it's not a tool for the
+faint-of-heart. But if you, like me, are too cheap to buy PartitionMagic,
+it can do the job, destructively.)
+<P>
+1. Install Windows, make sure it boots.
+<P>
+2. Install BeOS, DON'T install Bootman when given the choice.
+<P>
+ 2.5 Make sure Windows still boots.
+<P>
+3. Install Linux, DON'T install LILO if given the choice.
+<P>
+ 3.5 Make sure Windows still boots.
+<P>
+4. Boot into the BeOS (using the floppy), and run Bootman at the command
+line. See <a href="http://www.be.com/support/guides/installing_bootman.html">http://www.be.com/support/guides/installing_bootman.html</a> for
+detailed instructions.
+<P>
+5. Reboot your system without the BeOS Boot Floppy, and use Bootman to boot
+into every OS, one at a time, to make sure they all work.
+<P>
+IMHO, Bootman is better than the Windows NT bootmenu, and it's *way* better
+than LILO.

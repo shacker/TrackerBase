@@ -1,0 +1,64 @@
+#! /bin/sh
+
+# This version (simple.1b) demonstrates reading filenames 
+# from a directory and printing them to a page.
+
+# The usual variables
+
+Base=/boot/apps/TrackerBase/projects/simpletest
+InputPath=$Base/data
+OutputPath=$Base/output
+PartPath=$Base/parts
+FileName=index.html
+
+
+
+# This time we'll do it by using a function called IndexPage.
+# Everything between the opening { and the closing } is
+# the contents of the function. The function is not run
+# until the end of the page, where it's invoked.
+
+IndexPage(){
+
+# Start by sucking in some blocks of static HTML.
+	
+	cat $PartPath/headerdata
+	cat $PartPath/simple1bhead
+
+# The echo command can be used for lots of things, like
+# outputting the value of a variable, or repeating the contents
+# of some quoted content. The quotes are very important here.
+# Without them, the shell would interpret the < and > symbols as
+# redirect operators and would get confused.
+
+	echo "<FONT SIZE=+1>"
+
+# Here's an example of a "for" loop. It says, go through every file (*)
+# in the InputPath directory and echo its value, followed by <BR>.
+# When done with the directory, you're done with the loop.
+
+	for i in $InputPath/*; do
+		echo $i "<BR>"
+	done
+	
+	echo "</FONT>"
+	
+# Add in the footer of the index page	
+	cat $PartPath/footer	
+
+# The line below redirects the results of this entire function 
+# to a file, which is our index page.
+	
+} > $OutputPath/$FileName
+
+
+# The next line invokes the function above. Always define
+# functions first, then invoke them.
+IndexPage
+
+# User feedback:
+echo
+echo Done. Your output is at $OutputPath
+
+# Launch the new file in NetPositive.
+NetPositive $OutputPath/$FileName &

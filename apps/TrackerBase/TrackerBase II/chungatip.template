@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> 
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<META name="post_date" content="04/00">
+	<META name="description" content="Tips and Tricks for BeOS: !TITLE!">
+	<META name="keywords" content="Be, BeOS, BeBox, tips, tricks, tips and tricks, !CATEGORY!">
+
+	<title>!TITLE!</title>
+</head> 
+
+<body BGCOLOR="#FFFFFF" BACKGROUND="!BASEURL!/backgrounds/softblue.bak.gif" TEXT="#000000">
+
+<FONT FACE="Humnst777 BT, Arial, Helvetica">
+
+<TABLE WIDTH=640 border=0 CELLPADDING=0>
+<TR>
+	<TD WIDTH=155 valign=top>
+		<img src="!BASEURL!/backgrounds/blank1.gif" width=130 height=5 alt="">
+		<b>
+			<p>
+				<img src="!BASEURL!/images/dropshadow2.nav.green.gif" width=142 height=273 border=0 align=left alt="BeTips" usemap="#nav">
+				<BR clear=all>
+			</p><p>
+				<img src="!BASEURL!/backgrounds/blank1.gif" width=130 height=30 alt="">
+			</p><p>
+				<center><a href="http://free.be.com/"><img src="!BASEURL!/images/freebe.gif" width=100 height=166 border=0 alt="Get BeOS for free!"></a></center>
+			</p><p>
+				<center><a href="http://www.beosradio.com/"><img src="!BASEURL!/images/beosradio.gif" width=88 height=31 border=0 alt="BeOS Radio"></a></center>
+			</p><p>
+		</b>
+	</TD><TD VALIGN=TOP WIDTH=500>
+		<P>
+			<CENTER>
+			<FONT FACE="Humnst777 BT, Arial, Helvetica">
+			&nbsp;<BR>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<!--Begin Flycast Ad Copyright 1999 Flycast Communications. 
+			All rights reserved. Patent Pending --> 
+
+			<SCRIPT LANGUAGE="JAVASCRIPT"> 
+			<!-- 
+				FlycastSite = "TheBeOSTipServer"; 
+				FlycastPage = "runofsite"; 
+				FlycastWidth        = 468; 
+				FlycastHeight       = 60; 
+				FlycastPrintTag     = true; 
+				FlycastNewAd        = true; 
+				FlycastLoaded       = false; 
+				FlycastVersion      = 3.5; 
+			//--> 
+			</SCRIPT> 
+
+			<SCRIPT SRC="http://js-adex7.flycast.com/FlycastUniversal/" LANGUAGE="JAVASCRIPT"></SCRIPT> 
+
+			<SCRIPT LANGUAGE="JAVASCRIPT"> 
+			<!-- 
+			    if (FlycastLoaded) FlycastDeliverAd(); 
+			//--> 
+			</SCRIPT> 
+
+			<NOSCRIPT> 
+			    <IFRAME WIDTH=468 HEIGHT=60 SRC="http://ad-adex7.flycast.com/server/iframe/TheBeOSTipServer/runofsite/123456" scrolling="no" marginwidth=0 marginheight=0 frameborder=0 vspace=0 hspace=0> 
+			    <A target="_top" HREF="http://ad-adex7.flycast.com/server/click/TheBeOSTipServer/runofsite/123456"><IMG BORDER=0 WIDTH=468 HEIGHT=60 SRC="http://ad-adex7.flycast.com/server/img/TheBeOSTipServer/runofsite/123456"></A> 
+			    </IFRAME> 
+			</NOSCRIPT> 
+			<!--End Flycast Ad Copyright 1999 Flycast Communications. All rights reserved. Patent Pending --> 
+			</CENTER>
+		</p><p>
+			<blockquote>
+			!LOGO!
+		</p><p>
+			<h2><font color="navy">!TITLE!</font></h2>
+		</p><p> 
+			<FONT FACE="Humnst777 BT, Arial, Helvetica"> 
+			!TIP!
+			<p><a href="http://www.beusergroup.de/index.phtml?go=know&ac=show_tip&p1=!TIPID!"><b>Hier findest Du den Tip in Deutsch</b></a><BR>
+			<a href="http://betrayer.free.fr/astuces/actual_data/tip!TIPID!.html"><b>Lisez cette astuce en fran&ccedil;ais ici</b></a>
+		</p><p>
+			<HR WIDTH="100%">
+		</p><p>
+			<b>Submitted by</b> !EMAIL!
+			<br>
+			!URL!
+		</p><p>
+			<br>
+		</p><p>
+	</TD>
+</TR>
+</TABLE>
+
+<!-- IMAGE MAP -->
+<MAP NAME="nav">
+	<AREA SHAPE=RECT COORDS="0,0,141,28" HREF="/"  ALT="Home">
+	<AREA SHAPE=RECT COORDS="1,29,140,46" HREF="/applications.html"  ALT="Applications">
+	<AREA SHAPE=RECT COORDS="2,47,139,60" HREF="/audiovideo.html"  ALT="Audio and Video">
+	<AREA SHAPE=RECT COORDS="1,61,141,76" HREF="/hardware.html"  ALT="Hardware">
+	<AREA SHAPE=RECT COORDS="0,76,141,91" HREF="/interface.html"  ALT="Interface">
+	<AREA SHAPE=RECT COORDS="1,91,140,107" HREF="/misc.html"  ALT="Miscellaneous.html">
+	<AREA SHAPE=RECT COORDS="1,108,139,121" HREF="/networking.html"  ALT="Networking">
+	<AREA SHAPE=RECT COORDS="0,123,139,135" HREF="/scripting.html"  ALT="Scripting">
+	<AREA SHAPE=RECT COORDS="0,137,139,150" HREF="/terminal.html"  ALT="Terminal">
+	<AREA SHAPE=RECT COORDS="1,151,140,166" HREF="/tracker.html"  ALT="Tracker">
+	<AREA SHAPE=RECT COORDS="0,168,139,181" HREF="/warnings.html"  ALT="Warnings">
+	<AREA SHAPE=RECT COORDS="0,195,139,210" HREF="/submit/addtip.html"  ALT="Submit a Tip">
+	<AREA SHAPE=RECT COORDS="0,211,139,225" HREF="/ubbcgi/Ultimate.cgi"  ALT="Discuss">
+	<AREA SHAPE=RECT COORDS="0,225,138,241" HREF="/etc/"  ALT="Etc.">
+	<AREA SHAPE=RECT COORDS="1,247,140,271" HREF="/search/"  ALT="Search">
+	<AREA SHAPE=default HREF="/">
+</MAP>
+
+</font>	
+</body>
+</html>

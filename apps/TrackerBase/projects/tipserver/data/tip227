@@ -1,0 +1,23 @@
+If your CD-ROM audio cable is connected to your sound card, you don't need a BeOS audio driver for your sound card to play audio CDs. Heck, you don't even need to have the media_server or media_addon_server running :)
+<P>
+Open up a terminal window and use the "play" program (as described in the tip <a href="/cgi-bin/chunga.pl?ID=tip141">Rip CDs from the command line</a>).
+<P>
+So to start playing a CD you would type:
+
+<pre>play (your device) 0 (track number to start at)</pre>
+
+Just typing <tt>play</tt> with no arguments will tell you which devices are valid.
+
+<P>
+Alternatively, you can play CDs without an audio driver if you start them from within Windows:
+<oI>
+<li>Boot Windows 95</li>
+
+<li> Start playing the audio CD and close the CD player. The  playback sholid continue...</li>
+
+<li>Launch BeOS from Windows using the "Launch BeOS" utility. 
+Normally, you should still hear the CD playing.</li>
+
+<li>Launch the CD player -- that's it ! You can even change CDs.  The CDs will stay "playable" as long as you don't reboot.</li>
+</ol>
+

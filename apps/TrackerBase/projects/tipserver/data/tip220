@@ -1,0 +1,1 @@
+When editing filenames (Alt+E) or attributes (single-click and pause) from Tracker, you can "back out" of your edits  by hitting Escape. This will return the filename or attribute to what it was before you started editing it. This is useful if you mess up while editing, especially if you've forgotten what the string in question originally was.

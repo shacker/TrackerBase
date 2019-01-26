@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>TrackerBase Readme</title>
+</head>
+<body  style="background-image:url(gfx/blue_bak.jpg); background-repeat: repeat-y;" TEXT="#000000" LINK="#711E08" VLINK="#D098A5">
+
+	<TABLE WIDTH=100% border=0 CELLPADDING=10>
+		<TR>
+			<TD WIDTH=130 valign=top>
+
+<img src="./gfx/blank1.gif" width=130 height=5 alt="blank1">
+<b>
+
+<FONT SIZE=+2 COLOR="#FFFFFF"><i>General</i></FONT>
+<FONT SIZE=+1 COLOR="#FFFFB3">
+<P><a href="about.html">About</a>
+<P><a href="how.html">How it works</a>
+<P><a href="usage.html">Usage</a>
+<P><a href="attributes.html">Attributes</a>
+<P><a href="queries.html">Queries</a>
+<P><a href="caveats.html">Caveats</a>
+<P><a href="tbase2.html">TBase II</a>
+</FONT>
+
+<FONT SIZE=+1 COLOR="#FFFFB3">
+<P><FONT SIZE=+2 COLOR="#FFFFFF"><i>Sample Code</i></FONT>
+<P><a href="simple.html">Simpletest</a>
+<P><a href="bepeople.html">BePeople</a>
+<P><a href="news.html">News site</a>
+<P><a href="tips.html">Tip server</a>
+<P><a href="snippets.html">Snippets</a>
+</FONT>
+
+</b>
+
+			</TD>
+
+			<TD VALIGN=TOP>
+
+<IMG SRC="gfx/tbase.icon.jpg" ALIGN="RIGHT">
+
+<FONT SIZE=+2 COLOR="#5E6EA5">About TrackerBase</FONT>
+
+<h3>What it is</h3>
+
+TrackerBase is the name I've given to a system that can be used to extract Web sites from BeOS databases. What? BeOS has no database software? True, but BeOS has:
+<UL>
+<LI> A filesystem that allows you to associate attributes of unlimited size or type with each file.
+<P>
+<LI>A highly flexible interface onto files (Tracker), which allows for direct  editing of attributes and excellent column display / sorting options.
+<P>
+<LI>A query engine that lets you perform sophisticated searches against your attributes by any combination of criteria.
+<P>
+<LI>A mature and powerful scripting language -- the bash shell.
+</UL>
+
+ Taken together, I figured it would be possible to replace the database --> web site generator I was using under Windows to maintain <a href="http://www.birdhouse.org/beos/tips">The BeOS Tip Server</a>. The experiment was a success, so I expanded the system to make it generically applicable to any BeOS database, created a new filetype, and cooked up some sample databases with accompanying scripts. Finally, I wrote this documentation, which, you might say, is the real meat of the system.
+<P>
+In a nutshell, TrackerBase considers any Tracker view to be a database, with each file representing a record and each attribute representing a field associated with that record. These databases can be populated with any kind of file, although this distribution will install a new TrackerBase filetype on your system (which may or may not have advantages over standard files, depending on your project). You manage your database with Tracker, adding and removing records, and editing their attributes directly. Shell scripts then examine your database, extracting attributes into variables and generating two basic kinds of pages: menu (index)  pages containing links, and data pages containing the actual contents of your records. Record contents are embedded into HTML templates, so design possibilities are limited only by your HTML skills. TrackerBase scripts concatenate blocks of pre-formed HTML with the value of variables, and write the results to HTML files in an output directory. In other words, it works similarly to tools like ColdFusion, Frontier, and GDIdb, except that you don't have to boot into MacOS or Windows to use it, and you don't have to install any special software -- BeOS already includes everything you need.
+
+<P>
+Included here are three sample databases and four sample scripts (one of the scripts works on your existing collection of People files, rather than on TrackerBase files). Since these samples obviously won't work for your site as-is, you'll have to dig in and rip them apart, re-assembling them to suit your needs. The scripts are commented pretty heavily, so it shouldn't be too hard to see how they work or how to tweak them.
+<P>
+If you don't have much bash or scripting experience, the <a href="simple.html">Simple</a> page describes the Simple script series, which is a sort of tutorial you can use if you're new to shell scripting. The <a href="snippets.html">Snippets</a> page includes most of the bits and pieces you'll need to build TrackerBase scripts -- just copy/paste the pieces into a fresh script and season to taste.
+<P>
+See the <a href="how.html">How it Works</a> and <a href="usage.html">Usage</a> sections for more details.
+
+
+<h3>What it isn't</h3>
+The BeOS filesystem is "database-like." While it shares many qualities with true databases, there are some things it cannot do. Three important things that BeOS databases can't do:
+<P>
+1) Any kind of relational work. For example, let's say you're using the Category attribute to categorize your database files, and there are 10 allowable categories. In a true relational database, you would probably create a separate table containing just those categories, and then link that table to the Category field so your allowable options would be presented when entering that field. Since Tracker can't do that, you'll have to type in the category manually (or copy/paste it from another record).
+<P>
+2) Any kind of SQL  queries (Structured Query Language is the industry-standard syntax used for extracting and managing data in databases) . Many SQL-like functions can be emulated with various shell functions, but it's hard to emulate the entire range of SQL's functionality. Simple criteria queries are simple thanks to the BeOS query engine, but functions like SQL updates are somewhat more complex.
+<P>
+3) Dynamic site creation. Some database --> web tools interact with web servers and create pages on-the-fly, as they're requested. Others create "static" sites -- they crunch a databased site into HTML format, which then needs to be transferred to the server. TrackerBase I is of the latter variety, which is actually more useful to more people, since most people can't run custom programs on ISP servers anyway.
+<P>
+<b>However</b>, this documentation includes a section called "TBase II", which includes some basic information on generating a live web site from the BFS database with a BeOS web server. Installing and configuring TBase II is not as simple as the rest of the TrackerBase system.
+<P>
+These scripts are also not as fast as other web extraction tools you may have used. Shell scripts, especially ones that have to parse through hundreds of files, are inherently slower than compiled executables. In addition, massive attribute management is  one of the slower aspects of BeOS (try emptying your Trash when it contains 1,000 files on BeOS, then try it under Windows -- BeOS is far slower because it has to delete all the attributes for all those files, meaning it has many times more work to do). The BeOS Tip Server could be generated in four seconds with my Windows system (MS Access and GDIdb extraction software), but takes a few minutes under BeOS, generating around one file per second when it gets going. Speed is directly proportional to the number of attributes extracted for each file, but it's still plenty fast enough to not be annoying. Just run it in the background and go do something else.
+
+
+<h3>Updates</h3>
+
+I plan to enhance TrackerBase over time, especially after hearing back from users. If there are things you need to do with TrackerBase that aren't included here, let me know. If you see gross inefficiencies in my scripts and have concrete suggestions on better ways to accomplish the same thing, let me know. Updates can be downloaded from <a href="http://www.birdhouse.org/beos/software">http://www.birdhouse.org/beos/software</a> and from <a href="http://www.be.com/beware">BeWare</a>.
+
+
+
+<h3>Registering TrackerBase</h3>
+
+TrackerBase is not software -- it's just one possible scheme for taking advantage of existing BeOS system services that aren't available on other platforms. I can't say that I "wrote" TrackerBase in the sense that an application developer could. However, I did put a whole lot of time into creating sample scripts and documenting the system, because I thought it would useful to the BeOS community. This software is free to anyone using it to build  sites that promote or relate to  BeOS  in any way. Just send me the URL of any site built out of TrackerBase, unless you're really rich or really generous, in which case you can send money too.
+<P>
+On the other hand, if you implement TrackerBase on  a <b>non-BeOS-related commercial  site</b>, the cost is $50. Contact <a href="mailto:beos@birdhouse.org">beos@birdhouse.org</a> for payment details.
+
+
+<h3>Bugs</h3>
+The installer takes care to install the filetype first, then the indexes, and then the files, so that files will be searchable by attribute right away. However, you may still need to reboot or run mimeset -all before your new attributes become searchable.
+<P>
+SoftwareValet does some weird stuff with folder-related attributes. All of the database folders were layed out perfectly for demo purposes, but all of that is lost after being run through SoftwareValet, so you'll have to re-display all of the attribute columns manually the first time you use them. In addition, weirdness happens with folder positions on the PPC side -- you may find your folders opening as tiny, half-inch squares at the top left of your screen. Just drag them open and re-arrange.
+<P>
+NetPositive 1.0 cannot be launched from Terminal with a filename as an argument, so the last line of these scripts fails if you haven't upgraded to NetPositive 2.0b.
+<P>
+Some scripts may generate non-halting error messages when they expect to find an attribute that does not exist (not empty attributes, but non-existent attributes).
+
+<h3>History</h3>
+
+Version 1.0, 8/30/98. This package.
+
+<P ALIGN=RIGHT>
+Next: <a href="how.html">How It Works</a>
+<P>
+<IMG SRC="gfx/tbase.icon.jpg">
+<P>
+
+<i>- <a href="mailto:beos@birdhouse.org">Scot Hacker</a>, 8/98</i>
+
+
+			</TD>
+		</TR>
+	</TABLE>
+
+
+
+
+</body>
+</html>

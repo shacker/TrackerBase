@@ -1,0 +1,5 @@
+TrackerBase Tutorial -- Simple.1a-5
+
+To run the tutorial, move the five scripts in this folder to /boot/home/config/bin, then run them sequentially from Terminal by typing their names. Each script is thoroughly commented for study.
+
+See the "Simple" section in the docs for details.

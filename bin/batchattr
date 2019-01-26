@@ -1,0 +1,41 @@
+#! /bin/sh
+
+### Changes an attribute for every file in a directory
+
+attribname="$1"
+value="$2"
+TempDir=`pwd`
+
+dircount=`ls -l $TempDir| wc -l` 
+dircount=`expr $dircount - 1` 
+
+
+# Get confirmation on command-line arguments
+
+echo
+echo Change the value of: $attribname
+echo to: $value
+echo for every file in: $TempDir?
+echo
+
+# If user says no, quit
+read yn
+if [ "$yn" = "y" ]; then
+	echo 
+	echo Changing attributes...
+	rmattr $attribname *
+	addattr "$attribname" "$value" *
+	echo
+	echo $dircount files changed. 
+else
+	echo
+	echo Nothing changed.
+	exit	
+fi
+
+
+
+
+	
+
+

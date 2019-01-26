@@ -1,0 +1,50 @@
+Have you ever wanted to filter your BeMail into a given folder after downloading?</p>
+
+<p>Although Be's built-in Find function is powerful and can be run from the command line (see <a href="/cgi-bin/chunga.pl?ID=tip176">Queries from Terminal</a>), the problem with querying BeMail is that you can't query all the attibutes you might like (e.g., &quot;CC:&quot;).
+
+<p>The following BASH script queries for my new mail and then greps it for a search word, in this case, &quot;beusertalk.&quot; Then it moves the results to a target folder, in this example, into the &quot;New&quot; folder (/boot/home/mail/BeUserTalk/New/). Although it is far from being fool-proof, it more or less gets the job done.
+
+<p>The second problem I ran into was automating the process, so that the filter ran when I got new mail.  After a number of unsatisfactory attempts, I finally decided to on the following solution.
+
+<p>I named this script &quot;mailbox&quot; and placed it in my &quot;mail&quot; folder, /boot/home/mail/. (You probably have a simlink in there now called &quot;mailbox&quot; that links to the &quot;in&quot; folder). Now whenever I double-click on the mailbox in the Deskbar, it runs the script instead of opening my &quot;in&quot; folder.  To complete the process, if it moved new beusertalk mail into the New folder it opens it up and then the last line of the script opens my in box.
+
+<PRE>
+#!/bin/sh
+
+targetfolder=$HOME/mail/BeUserTalk/New/
+searchword=beusertalk
+
+movedmail=no
+
+# just check new mail
+newmail=$(query "((MAIL:status=='*[nN][eE][wW]*')&&(BEOS:TYPE=='text/x-email'))")
+
+
+# iterate throw files while temporarily replacing spaces 
+# with backslashes so that it only splits at the newline
+for i in ${newmail// /\\}; do
+	# replace backlashes with spaces again
+	file="${i//\\/ }"
+	
+	# if file contain the searched-for word, then move it to target folder
+	if grep -ic "$searchword" "$file"; then
+		filename="${file##/*/}"
+		if [ ! -e "$targetfolder$filename" ]; then
+			mv "$file" "$targetfolder"
+			movedmail=yes
+		fi
+	fi
+done
+
+# open in folder
+/boot/beos/system/Tracker $HOME/mail/in
+
+# open $target folder if mail is moved there.
+if [ "$movedmail" = yes ]; then
+	/boot/beos/system/Tracker "$targetfolder"
+fi
+
+</PRE>
+
+<p>One word of warning: If this script ends up moving a bunch of files, it might take a second or two before your &quot;in&quot; folder actually opens.  You can move this line to the beginning of the script, if you don't mind watching your email disappear.
+

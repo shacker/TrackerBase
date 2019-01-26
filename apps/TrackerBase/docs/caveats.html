@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>TrackerBase Caveats</title>
+</head>
+<body  style="background-image:url(gfx/blue_bak.jpg); background-repeat: repeat-y;" TEXT="#000000" LINK="#711E08" VLINK="#D098A5">
+
+
+
+	<TABLE WIDTH=100% border=0 CELLPADDING=10>
+		<TR>
+			<TD WIDTH=130 valign=top>
+
+<img src="./gfx/blank1.gif" width=130 height=5 alt="blank1">
+<b>
+
+<FONT SIZE=+2 COLOR="#FFFFFF"><i>General</i></FONT>
+<FONT SIZE=+1 COLOR="#FFFFB3">
+<P><a href="about.html">About</a>
+<P><a href="how.html">How it works</a>
+<P><a href="usage.html">Usage</a>
+<P><a href="attributes.html">Attributes</a>
+<P><a href="queries.html">Queries</a>
+<P><a href="caveats.html">Caveats</a>
+<P><a href="tbase2.html">TBase II</a>
+</FONT>
+
+<FONT SIZE=+1 COLOR="#FFFFB3">
+<P><FONT SIZE=+2 COLOR="#FFFFFF"><i>Sample Code</i></FONT>
+<P><a href="simple.html">Simpletest</a>
+<P><a href="bepeople.html">BePeople</a>
+<P><a href="news.html">News site</a>
+<P><a href="tips.html">Tip server</a>
+<P><a href="snippets.html">Snippets</a>
+</FONT>
+
+</b>
+
+			</TD>
+
+			<TD VALIGN=TOP>
+
+<IMG SRC="gfx/tbase.icon.jpg" ALIGN="RIGHT">
+
+<FONT SIZE=+2 COLOR="#5E6EA5">TrackerBase Caveats</FONT>
+<p>
+
+&lt;PARANOID MODE&gt;<BR>
+While I have not experienced any untoward behavior from TrackerBase, it does do a lot of disk-intensive shuffling of attributes and grinding through files. If anything can handle that, it's BFS, but the standard disclaimers apply. I am not responsible for any damage caused to your filesystem or data. <BR>
+&lt;/PARANOID MODE&gt;
+
+<P>
+Also, here's a repeat of the warning in the attributes section:
+<P>
+<b>Warning: do NOT attempt to move attributed files from one partition to another from the command line with the <tt>mv</tt> command. Your files will move, but they'll lose all their attributes, even when going to another BFS volume. Bad bug. Be careful. It's fine to drag them across volumes with Tracker, however.</b>
+<P>
+If you intend to use queries as part of your site generation project, there are a few things to be aware of. For one, queries don't care about directories, so if you have other files that match the same criteria but live somewhere else, like in another folder, your project queries will pick those up as well. There are three solutions to this dilemma: 1) delete those files, 2) zip those files into an archive and delete the originals, and 3) move the files to another mounted volume (queries only search the current volume, by default). A future version of TrackerBase will include a reliable way to filter query results automatically.
+<P>
+Another important query caveat is the fact that as of R3.2, command-line queries still search the Trash, unlike the GUI query tool. There is no way to turn this off, so you may have to post-process your queries with sed or a similar tool. For example:
+<P>
+<TT>
+query "((name=="filename")&&(BEOS:TYPE=="text/trackerbase"))" | sed /Trash/d
+</TT>
+<P>
+See the <a href="snippets.html">Snippets</a> page for more on sed and the | operator.
+<P>
+When editing attributes with Tracker, it's not possible to delete their entire contents. For example, select an attribute, hit Backspace to delete it, and the original attribute will spring back. There are two possible solutions: use Tracker, but use a single space instead of nothing, or remove the attribute via Terminal with <tt>rmattr</tt>, then add it back in using "" (two quotation marks with no space between them) as the content.
+<P>
+There's another problem associated with using queries to get file listings rather than doing directory crawls: the list of files returned by the shell is a list of complete paths, which makes it difficult to create HTML links to those files. The workaround for this problem is described on the <a href="simple.html">Simple</a> page, but that workaround only works for directory crawls. I'm sure the real solution is a regular expression, but I haven't been able to figure out what. Thus, a second workaround was created for this scenario. If you look at the Tip Server script, you'll see a weird path variable toward the top:
+<P>
+<pre>
+Base=/boot/apps/TrackerBase/projects\tipserver
+InputPath=$Base/data
+DataPath=\\/boot\\/apps\\/TrackerBase\\/projects\\/tipserver\\/data\\/
+</pre>
+In other words, DataPath is the same as InputPath, but includes a ridiculous escape sequence for the slashes. This is used later in the script to subtract that path from each line in the query results list. It works, but requires a hacked variable like this for each query in the script that will be used for creating links. Let me know if you know a better way.
+<P>
+Finally, I'm still cutting my teeth on the shell, and I know there's plenty in these scripts that could be improved. I welcome all suggestions. <a href="mailto:beos@birdhouse.org">beos@birdhouse.org</a>
+
+<P ALIGN=RIGHT>
+Next: <a href="simple.html">SimpleTest</a>
+<P>
+<IMG SRC="gfx/tbase.icon.jpg" ALIGN="LEFT">
+<P>
+
+			</TD>
+		</TR>
+	</TABLE>
+
+
+
+
+</body>
+</html>

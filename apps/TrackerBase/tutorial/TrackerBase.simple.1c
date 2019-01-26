@@ -1,0 +1,64 @@
+#! /bin/sh
+ 
+# This version (simple.1c) demonstrates reading attributes
+# from filenames, storing them in variables, and writing
+# the values of those variables to a page.
+
+
+
+# The usual variables
+Base=/boot/apps/TrackerBase/projects/simpletest
+InputPath=$Base/data
+OutputPath=$Base/output
+PartPath=$Base/parts
+FileName=index.html
+
+
+
+# Define the IndexPage function
+
+IndexPage(){
+
+# Start by sucking in some blocks of static HTML.
+	
+	cat $PartPath/headerdata
+	cat $PartPath/simple1chead
+
+	echo "<FONT SIZE=+1>"
+
+# This "for" loop is identical to 1b's, but instead of just getting
+# filenames, it gets attributes from those files.
+# It says, go through every file (*)
+# in the InputPath directory. For each file encountered,
+# get the value of its TBASE:title attribute. Run that value
+# through the "cut" command to eliminate the crap we don't need
+# (see Snippets in the docs for details on cut). Write the results of that
+# compound command to a variable called Title. Echo Title's value,
+# followed by a line break. The rest is the same as sample1b.
+
+	for i in $InputPath/*; do
+		Title=`catattr TBASE:title "$i" | cut -f5-15 -d\ `
+		echo $Title "<BR>"
+	done
+	
+	echo "</FONT>"
+	
+# Add in the footer of the index page	
+	cat $PartPath/footer	
+
+# The line below redirects the results of this entire function 
+# to a file, which is our index page.
+	
+} > $OutputPath/$FileName
+
+
+# The next line invokes the function above. Always define
+# functions first, then invoke them.
+IndexPage
+
+# User feedback:
+echo
+echo Done. Your output is at $OutputPath
+
+# Launch the new file in NetPositive.
+NetPositive $OutputPath/$FileName &

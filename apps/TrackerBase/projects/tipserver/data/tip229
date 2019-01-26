@@ -1,0 +1,13 @@
+If you have multiple BFS partions on your system, you may only want some of them 
+to show up at boot time rather than all of them. Solution:
+<p>
+Add lines similar to these to your system's user-level startup script: <BR>
+/boot/home/config/boot/UserBootScript
+<pre>
+/bin/mountvolume -unmount /BeFast BeFast
+/bin/mountvolume -unmount /no\ name no\ name
+</pre>
+The \ 's are because these volumes have spaces in their names which need to be escaped.
+BeFast and no name are the volume names...
+<P>
+Hope that helps your clutter.  ;)

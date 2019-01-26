@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>TrackerBase : News Site</title>
+</head>
+<body  style="background-image:url(gfx/blue_bak.jpg); background-repeat: repeat-y;" TEXT="#000000" LINK="#711E08" VLINK="#D098A5">
+
+
+
+	<TABLE WIDTH=100% border=0 CELLPADDING=10>
+		<TR>
+			<TD WIDTH=130 valign=top>
+
+<img src="./gfx/blank1.gif" width=130 height=5 alt="blank1">
+<b>
+
+<FONT SIZE=+2 COLOR="#FFFFFF"><i>General</i></FONT>
+<FONT SIZE=+1 COLOR="#FFFFB3">
+<P><a href="about.html">About</a>
+<P><a href="how.html">How it works</a>
+<P><a href="usage.html">Usage</a>
+<P><a href="attributes.html">Attributes</a>
+<P><a href="queries.html">Queries</a>
+<P><a href="caveats.html">Caveats</a>
+<P><a href="tbase2.html">TBase II</a>
+</FONT>
+
+<FONT SIZE=+1 COLOR="#FFFFB3">
+<P><FONT SIZE=+2 COLOR="#FFFFFF"><i>Sample Code</i></FONT>
+<P><a href="simple.html">Simpletest</a>
+<P><a href="bepeople.html">BePeople</a>
+<P><a href="news.html">News site</a>
+<P><a href="tips.html">Tip server</a>
+<P><a href="snippets.html">Snippets</a>
+</FONT>
+
+</b>
+
+			</TD>
+
+			<TD VALIGN=TOP>
+
+<IMG SRC="gfx/tbase.icon.jpg" ALIGN="RIGHT">
+
+<FONT SIZE=+2 COLOR="#5E6EA5">News Site</FONT>
+<p>
+This is the only example in the bunch that generates a single page rather than a whole site. Oddly enough though, it was also the most complex in terms of getting the flowchart right. When editors add new stories to their page, they needed to show up at the top. But they also need to be grouped by day / date, and that's where things got tricky. The problem was that I was using each file's modification date to derive this info, but every time I went back and edited a file from a couple of days ago, it jumped to the top of the list. In other words, the chronology was not reliable. Using the file's creation date was not possible because we have to create new TrackerBase files by duplicating existing ones. When you do this, the new file keeps the copied file's date. What to do, what to do...
+<P>
+The solution, it turned out, was to create a new attribute, simply called "Day." The disadvantage here is that this attribute needs to be set manually by the webmaster. That's only a few characters to type per day, so it's no big deal. Plus, there's much more freedom in how the webmaster can  format the day, date, month, year, whatever. And it puts this control into Tracker, rather than in the script. Once that problem was solved, the rest was cake.
+<P>
+One of the interesting things about this template is that it adds a "publish" attribute, which is set to "y" or "n". When you're ready for stories to scroll off the page, just toggle their Publish attributes. Stories stay in the database for posterity, can be published or unpublished easily, and webmasters no longer have to manually delete stories from the end of the file.
+<P>
+Exercise for the reader: extend the script so that stories with the Publish attribute set to "n" will get written to a separate Archive page.
+<P>
+This template also uses PPC and X86 download attributes, in addition to the usual email and url attribs. One thing that's undecided here is how to use the Author attribute. With a few tweaks, you could use it for either the contributors name, or to keep track of which staff member posted the article (as BLE does in commented HTML).
+<P>
+If any of the BeOS-related news sites can put this to good use, please be my guest. Nevermind the quickie design or half-stolen stories or weird links... it's just placeholder content, and you can easily redesign around the basic script, which will publish a complete page, ready to upload, in just a few seconds.
+<P ALIGN=RIGHT>
+Next: <a href="tips.html">Tip Server</a>
+<P>
+<IMG SRC="gfx/tbase.icon.jpg" ALIGN="LEFT">
+<P>
+
+			</TD>
+		</TR>
+	</TABLE>
+
+
+
+
+</body>
+</html>

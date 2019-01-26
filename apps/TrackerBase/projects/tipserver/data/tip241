@@ -1,0 +1,4 @@
+Once upon a time, BeOS let you use up to 32 workspaces. With R4, that capability has returned. By default, nine workspaces are enabled. To change this to any number between one and 32, launch the Screen preferences panel and click the Workspaces... button. For a classic example of BeOS real-time behaviors in action, keep the Workspaces preferences panel open while you do this and notice how it rearranges itself dynamically as you change the number of available workspaces. 
+<P> 
+Note that only workspaces 1 - 12 can be toggled between via hotkeys  -- you'll need to use the Workspaces prefs panel to navigate through the rest. 
+<P> 

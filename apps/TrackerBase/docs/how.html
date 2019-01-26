@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>TrackerBase : How it works</title>
+</head>
+<body  style="background-image:url(gfx/blue_bak.jpg); background-repeat: repeat-y;" TEXT="#000000" LINK="#711E08" VLINK="#D098A5">
+
+
+
+	<TABLE WIDTH=100% border=0 CELLPADDING=10>
+		<TR>
+			<TD WIDTH=130 valign=top>
+
+<img src="./gfx/blank1.gif" width=130 height=5 alt="blank1">
+<b>
+
+<FONT SIZE=+2 COLOR="#FFFFFF"><i>General</i></FONT>
+<FONT SIZE=+1 COLOR="#FFFFB3">
+<P><a href="about.html">About</a>
+<P><a href="how.html">How it works</a>
+<P><a href="usage.html">Usage</a>
+<P><a href="attributes.html">Attributes</a>
+<P><a href="queries.html">Queries</a>
+<P><a href="caveats.html">Caveats</a>
+<P><a href="tbase2.html">TBase II</a>
+</FONT>
+
+<FONT SIZE=+1 COLOR="#FFFFB3">
+<P><FONT SIZE=+2 COLOR="#FFFFFF"><i>Sample Code</i></FONT>
+<P><a href="simple.html">Simpletest</a>
+<P><a href="bepeople.html">BePeople</a>
+<P><a href="news.html">News site</a>
+<P><a href="tips.html">Tip server</a>
+<P><a href="snippets.html">Snippets</a>
+</FONT>
+
+</b>
+
+			</TD>
+
+			<TD VALIGN=TOP>
+
+<IMG SRC="gfx/tbase.icon.jpg" ALIGN="RIGHT">
+
+<FONT SIZE=+2 COLOR="#5E6EA5">How TrackerBase Works</FONT>
+<p>
+
+Every folder on your system can potentially be used as a database, whether or not it  contains TrackerBase files. TrackerBase scripts use a combination of techniques to construct Web sites from folders full of files. In all cases, the basic process is this:
+<P>
+<OL>
+	<LI>Establish some regular directories for input, output, and "parts," or chunks of static HTML to be integrated into the pages you build.
+<P>
+	<LI>Break an existing Web page into consecutive pieces, consisting of things that stay the same and things that change. Create multiple small files out of the static items. Very small chunks of HTML, such as a single <tt>&lt;P&gt;</tt> tags, can simply be dropped into scripts with the <tt>echo</tt> command.
+<P>
+	<LI>Define  elements that are different for every page as variables, and create BeOS attributes for them, if they don't exist already.
+<P>
+	<LI>If you have "main" bodies of content, as most Web pages do, store that in the TrackerBase text file itself.
+<P>
+	<LI>Create a list of files to be turned into Web pages. This list can exist only in memory, or it can be written to a text file for temporary storage. It can be a list of every file in a directory, or of files that match some criteria, such as a BeOS query result.	Each line in the list represents one of your files (records). Go through this list one line at a time and hoover the attributes you need out of the corresponding file. In most cases, assign the contents of each attribute to a variable. See <a href="attributes.html">Attributes</a> for more on storing, managing, and extracting attributes).
+<P>
+<LI>In some cases, scripts will run extra tests and perform extra actions when certain conditions are true. For example, the <a href="tips.html">tipserver</a> and <a href="news.html">news_site</a> scripts will create linked URLs and e-mail addresses if and only if URLs or e-mail addresses are present.
+<P>
+	<LI>In a specific order, concatenate static HTML chunks from the parts directory with variables in memory. Write the results to an HTML file and go on to the next one.
+<P>
+	<LI>Build index (linking) pages  similarly. Some of these scripts build the index page and the linked pages simultaneously, branching off every time a link is created to construct the page that's being linked to.
+
+</OL>
+<P ALIGN=RIGHT>
+Next: <a href="usage.html">Usage</a>
+
+<P>
+<IMG SRC="gfx/tbase.icon.jpg" ALIGN="LEFT">
+<P>
+
+			</TD>
+		</TR>
+	</TABLE>
+
+
+
+
+</body>
+</html>

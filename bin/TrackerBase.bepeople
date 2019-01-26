@@ -1,0 +1,263 @@
+#! /bin/sh
+
+### TrackerBase.bepeople -- scans your /boot/home/people directory and
+### creates a lightweight contact list in HTML format. Each name on the list
+### links to a separate page including all that data from that Person file.
+
+# Scot Hacker, 8/98. Updates at http://www.birdhouse.org/beos/software
+# Comments to beos@birdhouse.org. See readme.html for info.
+
+
+### User variables -- set these to suit your needs / system.
+
+# Insert your name here
+echo Please type your name:
+read UserName
+PageTitle="$UserName's BePeople"
+
+# Where's the root directory of this project? You need to make sure
+# this directory actually reflects your setup.
+Base=/boot/apps/TrackerBase/projects/bepeople
+
+# Where should the output files go? The default is the output
+# subdirectory of the project's base.
+ExportPath=$Base/output
+
+# Where are your people files?
+InputPath=/boot/home/people
+
+# The name of the contacts list page to be generated.
+FileName=index.html
+
+# Where the HTML chunks are stored. Default is the parts subdir
+# of the base dir.
+PartPath=$Base/parts
+
+# Where should all the individual record files be dumped? 
+# This default should work well.
+Bin=$Base/output/bin
+
+### End of user variables
+
+
+
+# Define some simple HTML variables we can re-use later. Note that lots of HTML
+# includes characters that need to be escaped, such as the < and > symbols.
+# We avoid having to escape them by surrounding the variable text in quotes.
+
+rowopen="<TR VALIGN=BOTTOM>"
+rowclose="</TR>"
+highcell="<TD BGCOLOR=#FFFFDA>"
+lowcell="<TD BGCOLOR=#83D1C5>"
+dividercellopen="<TD BGCOLOR=#46528A><FONT COLOR=#D0D7BB SIZE=+1><B>"
+dividercellclose="</b></FONT></TD>"
+cellclose="</TD>"
+boldon="<B>"
+boldoff="</B>"
+break="<BR>"
+
+
+# The main contacts page alternates colors for readability. This variable
+# will be toggled between the high and low colors after each record.
+# We'll start with the low value.
+
+cellopen=$lowcell
+
+
+# Now the script begins. It works in two parts -- for each record encountered
+# while building the index, we branch out and execute a "DoPage" function
+# to build the associated record. Whenver invoking a function, it has to have
+# been declared first. Thus, the record-building code comes before the index
+# page code here on the page, but not in the order of operations.
+
+DoPage() {
+
+# Here we start alternating between chunks of HTML stored in the parts 
+# directory and HTML embedded in the script. Note the { and } brackets
+# above and at the end of the function. The entire function is run in
+# memory, then its results are dumped to a file, which is named for 
+# the current record. Whenever you see a $ followed by a name, the
+# current value of that variable will be inserted.
+
+	cat $PartPath/head1
+	echo "<TITLE> " $Name "</TITLE>"
+	cat $PartPath/head1	
+	cat $PartPath/head2
+	echo "<BLOCKQUOTE>"
+	echo "<P>"
+	echo "<TABLE WIDTH=95% BORDER=0 CELLPADDING=10 CELLSPACING=0>"
+	echo "<TR>"
+	echo "$highcell" "<H2> " $Name"</H2>" "</TD>"
+	echo "</TR>"
+	echo "<TR>"
+	echo "$lowcell"
+
+# Here's the meat of the record pages. We're simply restating the value
+# of each variable for the current record and sandwiching it between
+# appropriate HTML.
+
+	echo $boldon Nickname: $boldoff "$Nickname" $break
+	echo $boldon Company: $boldoff "$Company" $break
+	echo $boldon Address: $boldoff "$Address" $break
+	echo $boldon City: $boldoff "$City" $break
+	echo $boldon State: $boldoff "$State" $break
+	echo $boldon Zip: $boldoff "$Zip" $break
+	echo $boldon Country: $boldoff "$Country" $break
+	echo $boldon Home phone: $boldoff "$Hphone" $break
+	echo $boldon Work phone: $boldoff "$Wphone" $break
+	echo $boldon Fax: $boldoff "$Fax" $break
+
+# We handle the mail and url variables a little differently. Because sandwiching
+# variables and HTML together resulted in spaces in the links which made the links
+# format badly, we set up a temp variable for the whole link, then use sed to get
+# rid of all the spaces. Then we have to put a space back in between "A" and "HREF."
+# The result is nice, neat mail and http links on the page.
+
+	MailTemp=`echo "<A HREF=mailto:""$Email"">""$Email""</A>" | sed s/\ //g | sed s/AHREF/A\ HREF/`
+	echo $boldon E-mail: $boldoff "$MailTemp" $break
+	
+	URLTemp=`echo "<A HREF=""$URL"">""$URL""</A>" | sed s/\ //g | sed s/AHREF/A\ HREF/`
+	echo $boldon URL: $boldoff "$URLTemp" $break	
+	
+	echo $boldon Group: $boldoff "$Group" $break
+	echo
+	echo "<P>"
+
+	echo "</TD>"
+	echo "</TR>"
+	echo "</TABLE>"	
+	echo "<P>"
+	
+# This links back to the index page. Note that it makes a small assumption: 
+# that the bin where you dump the records is one directory below the index
+# file. This is pretty safe, and you can tweak it if it doesn't work for you.
+
+	echo "<FONT SIZE=+1><A HREF=../$FileName><B>"Return to "$PageTitle""</B></A></FONT>"
+	echo "<BLOCKQUOTE>"
+	echo "</BODY>"
+	echo "</HTML>"
+
+# Now the function is finished and we dump the whole thing into the bin 
+# directory, with a filename similar to the original but without spaces or commas.
+# The OutName variable is defined in the index section below, which actually runs first.
+
+} > $Bin/$OutName.html
+
+
+
+
+# Now we begin the first function, even though it comes second in the file.
+# Again, we build the page by concatenating stored HTML parts and variables.
+
+# Give a little user feedback...
+
+echo
+echo Preparing a contacts page from your Person files at $ExportPath/$FileName
+echo
+echo Building individual pages. This may take a minute...
+echo
+
+{
+	cat $PartPath/head1
+	echo "<TITLE>" $PageTitle "</TITLE>"
+	cat $PartPath/head2
+	echo "<CENTER>"
+	echo "<H2>" $PageTitle "</H2>"
+	
+
+# Table header cells. Note the use of table cell code defined as variables
+# at the start of the script.
+
+	echo "<TABLE WIDTH=95% BORDER=0 CELLPADDING=5 CELLSPACING=0>"
+	echo "$dividercellopen" "Name" "$dividercellclose"
+	echo "$dividercellopen" "E-Mail" "$dividercellclose"	
+	echo "$dividercellopen" "Home Phone" "$dividercellclose"
+	echo "$dividercellopen" "Work Phone" "$dividercellclose"
+
+
+# Looping begins here. "for in $InputPath/*; do" means that we're going to examine
+# every file in the input directory, one at a time. For each one, we'll redefine
+# a collection of variables and take some actions. The sed statement in the first
+# variable removes the file's path. In other words, we want to work with a file called
+# "Joe Blow," not "/boot/home/people/Joe Blow." The rest of the variables use BeOS'
+# catattr command to extract the value of variables. Because the shell returns answers
+# with some garbage we don't need, we use the cut command to trim them down to
+# just what we need.
+		
+	for i in $InputPath/*; do
+	
+		Name=`echo "$i" | sed s:"$InputPath/":: `
+		Hphone=`catattr META:hphone "$i" | cut -f3 -d\:`
+		Wphone=`catattr META:wphone "$i" | cut -f3 -d\:`		
+		Email=`catattr META:email "$i" | cut -f3 -d\:`	
+		Company=`catattr META:company "$i" | cut -f3 -d\:`	
+		Address=`catattr META:address "$i" | cut -f3 -d\:`	
+		City=`catattr META:city "$i" | cut -f3 -d\:`	
+		State=`catattr META:state "$i" | cut -f3 -d\:`	
+		Zip=`catattr META:zip "$i" | cut -f3 -d\:`	
+		Country=`catattr META:country "$i" | cut -f3 -d\:`	
+		Fax=`catattr META:fax "$i" | cut -f3 -d\:`	
+		URL=`catattr META:url "$i" | cut -f3,4 -d\:`	
+		Group=`catattr META:group "$i" | cut -f3 -d\:`	
+		Nickname=`catattr META:nickname "$i" | cut -f3 -d\:`	
+		OutName=`echo "$Name" | sed s/,//g | sed s/\ //g`
+				
+		echo			
+		echo $rowopen
+		echo $cellopen $boldon 
+
+# Here's where we link every entry on the index page to a corresponding record. We
+# also test to see whether an email address is present. If so, we display it and create
+# a mailto: link.
+
+		echo "<A HREF=""$Bin/$OutName.html"">""$Name""</A>"
+		echo $boldoff $cellclose		
+		echo $cellopen
+			if [ -z $Email ]; then
+				echo 
+			else
+				echo \<A HREF=\"mailto:$Email\"\> $Email\<\/A\> 
+			fi
+
+#More basic concatenation of variables...
+			
+		echo $cellclose
+		echo $cellopen $Hphone $cellclose
+		echo $cellopen $Wphone $cellclose
+		echo $rowclose
+		echo
+		
+
+# Now we invoke the DoPage function above to create a full, linked record
+# for this entry. When DoPage returns to this point, we add an appropriate 
+# MIME type to the file it generated so it has the right icon right off the bat.
+
+		DoPage
+		addattr BEOS:TYPE text/html "$Bin/$OutName.html"
+	
+		
+# To get alternating stripes on the index page, we tToggle the value of the 
+# cell highlighting variable back and forth, one toggle for each record.
+
+		if [ "$cellopen" = "$highcell" ]; then
+			cellopen="$lowcell"
+		else
+			cellopen="$highcell"			
+		fi
+			
+	done
+
+# Suck in the document footer from the parts bin.
+	cat $PartPath/footer
+
+# Spit the results of this entire function to the index file.	
+} > $ExportPath/$FileName
+
+# Give the index page a MIME type.
+addattr BEOS:TYPE text/html $ExportPath/$FileName
+
+# Finished. Report back to the user.
+echo Done. See $ExportPath for results.
+
+NetPositive $ExportPath/$FileName &
+

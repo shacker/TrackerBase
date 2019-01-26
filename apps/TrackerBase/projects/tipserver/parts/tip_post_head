@@ -1,0 +1,38 @@
+</head>
+<body BGCOLOR="#FFFFFF" BACKGROUND="/backgrounds/blue_bak2.jpg"  TEXT="#000000" LINK="#3D59AB" VLINK="#708090">
+
+ 
+
+	 
+	<TABLE WIDTH=100% border=0 CELLPADDING=0>
+		<TR>
+			<TD WIDTH=140 valign=top>
+
+<img src="/backgrounds/blank1.gif" width=130 height=5 alt="blank1">
+<b>
+<p>
+<img src="/beos/tips/images/nav.gif" width=129 height=253 border=0 alt="nav" align="left" usemap="#nav">
+
+<BR clear=all>
+<img src="/backgrounds/blank1.gif" width=10  height=20 alt="blank1"><BR>
+
+          <form method="POST" action="http://www.dnai.com/cgi-bin/swish.pl">
+            <input type="text" name="query" size=13 value="">
+            <P>
+            <input type="submit" value="Search">
+            <input type="hidden" name="swish_username" value="waxwing">
+            <input type="hidden" name="swish_domain" value="birdhouse.org">
+          </form>
+
+
+</b>
+
+			</TD>
+
+			<TD VALIGN=TOP>
+			
+
+<CENTER>
+<FONT FACE="Humnst777 BT, Arial, Helvetica">
+
+<P>&nbsp;<BR>
